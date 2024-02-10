@@ -5,7 +5,6 @@ import com.lisade.togeduck.dto.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.FestivalImage;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -26,7 +25,7 @@ public interface FestivalMapper {
     default List<String> festivalImagesToPaths(List<FestivalImage> festivalImages) {
         return festivalImages.stream()
             .map(FestivalImage::getPath)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     default Slice<FestivalDto> toFestivalDtoSlice(Slice<Festival> festivals) {
