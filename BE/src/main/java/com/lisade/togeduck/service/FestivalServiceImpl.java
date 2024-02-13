@@ -20,6 +20,7 @@ public class FestivalServiceImpl implements FestivalService {
 
     private final FestivalRepository festivalRepository;
     private final FestivalMapper festivalMapper;
+    private final ViewService viewService;
 
     @Override
     public Slice<FestivalDto> getList(Pageable pageable, Category category,
@@ -40,6 +41,7 @@ public class FestivalServiceImpl implements FestivalService {
     public FestivalDetailDto getDetail(Long id) {
         Optional<Festival> optionalFestival = festivalRepository.findById(id);
         Festival festival = optionalFestival.orElseThrow(NotFoundException::new);
+        viewService.add(festival);
         return festivalMapper.toFestivalDetailDto(festival);
     }
 }
