@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.Category;
@@ -16,6 +17,7 @@ import com.lisade.togeduck.repository.FestivalRepository;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +37,8 @@ class FestivalServiceImplTest {
     @Mock
     private FestivalMapper festivalMapper;
 
+    @Mock
+    ViewService viewService;
     @InjectMocks
     private FestivalServiceImpl festivalService;
 
@@ -43,17 +47,7 @@ class FestivalServiceImplTest {
     void getList() {
 
         //given
-        Festival mockFestival = Festival.builder()
-            .id(1L)
-            .title("Fake Festival")
-            .category(Category.SPORTS)
-            .content("This is a fake festival")
-            .location("Fake location")
-            .xPos(0.0)
-            .yPos(0.0)
-            .startedAt(LocalDateTime.now())
-            .festivalStatus(FestivalStatus.RECRUITMENT)
-            .build();
+        Festival mockFestival = getMockFestival(1L);
         Slice<Festival> mockFestivalSlice = new SliceImpl<>(
             Collections.singletonList(mockFestival));
 
@@ -86,8 +80,39 @@ class FestivalServiceImplTest {
         assertThat(result.getContent().get(0).getPaths()).contains("first");
     }
 
+    private Festival getMockFestival(Long festivalId) {
+        return Festival.builder()
+            .id(festivalId)
+            .title("Fake Festival")
+            .category(Category.SPORTS)
+            .content("This is a fake festival")
+            .location("Fake location")
+            .xPos(0.0)
+            .yPos(0.0)
+            .startedAt(LocalDateTime.now())
+            .festivalStatus(FestivalStatus.RECRUITMENT)
+            .build();
+    }
+
     @Test
     @DisplayName("사용자로부터 특정 행사의 id를 입력받고 해당하는 행사를 반환한다.")
     void get() {
+        //given
+        Long festivalId = 1L;
+        Festival mockFestival = getMockFestival(festivalId);
+        FestivalDetailDto mockFestivalDetailDto = FestivalDetailDto
+            .builder()
+            .id(1L)
+            .title("Fake FestivalDetailDto").build();
+        when(festivalRepository.findById(festivalId)).thenReturn(Optional.of(mockFestival));
+        when(festivalMapper.toFestivalDetailDto(mockFestival)).thenReturn(mockFestivalDetailDto);
+
+        //when
+        festivalService.getDetail(festivalId);
+
+        //then
+        verify(festivalRepository, times(1)).findById(festivalId);
+        verify(viewService, times(1)).add(mockFestival);
+        verify(festivalMapper, times(1)).toFestivalDetailDto(mockFestival);
     }
 }
