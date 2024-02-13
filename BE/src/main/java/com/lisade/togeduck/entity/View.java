@@ -9,21 +9,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.sql.Date;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 
 @Table
 @Entity
 @Getter
 @Builder
 @AllArgsConstructor
-@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class View {
 
@@ -33,10 +30,9 @@ public class View {
     private Long id;
 
     @Column(name = "measurement_at", nullable = false)
-    private Date date;
+    private LocalDate measurementAt;
 
     @Column(name = "view", nullable = false)
-    @ColumnDefault(value = "0")
     private Integer view;
 
     @ManyToOne(fetch = FetchType.LAZY)
