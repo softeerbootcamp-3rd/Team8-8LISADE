@@ -16,43 +16,42 @@
             android:id="@+id/articleImg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/dummy_psy_concert"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/dummy_psy_concert" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
-            style="@style/Widget.Material3.Button.TextButton"
             android:id="@+id/articleDetailButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="상세정보"
             android:textColor="@color/gray300"
             app:layout_constraintEnd_toStartOf="@id/routeButton"
-            app:layout_constraintTop_toBottomOf="@id/articleImg"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/articleImg" />
+
         <Button
-            style="@style/Widget.Material3.Button.TextButton"
             android:id="@+id/routeButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="노선"
             android:textColor="@color/gray300"
-            app:layout_constraintTop_toBottomOf="@id/articleImg"
-            app:layout_constraintStart_toEndOf="@id/articleDetailButton"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toEndOf="@id/articleDetailButton"
+            app:layout_constraintTop_toBottomOf="@id/articleImg" />
+
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dividerInsetStart="16dp"
             app:dividerInsetEnd="16dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:dividerInsetStart="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/routeButton"
-            />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/routeButton" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/introFragmentContainerView"
@@ -60,10 +59,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:defaultNavHost="true"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider"
             app:navGraph="@navigation/nav_detail" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
