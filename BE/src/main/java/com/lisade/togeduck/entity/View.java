@@ -32,8 +32,8 @@ public class View {
     @Column(name = "measurement_at", nullable = false)
     private LocalDate measurementAt;
 
-    @Column(name = "view", nullable = false)
-    private Integer view;
+    @Column(name = "count", nullable = false)
+    private Integer count;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id", nullable = false)

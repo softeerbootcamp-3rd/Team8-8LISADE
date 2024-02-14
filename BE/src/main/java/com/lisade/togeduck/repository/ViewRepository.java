@@ -1,7 +1,8 @@
 package com.lisade.togeduck.repository;
 
+import static com.lisade.togeduck.entity.QView.view;
+
 import com.lisade.togeduck.entity.Festival;
-import com.lisade.togeduck.entity.QView;
 import com.lisade.togeduck.entity.View;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -17,9 +18,7 @@ public class ViewRepository {
     private final EntityManager entityManager;
 
     public void add(Festival festival, LocalDate measurementAt) {
-        QView view = QView.view1;
-
-        long affectedRows = updateCount(festival, measurementAt, view);
+        long affectedRows = updateCount(festival, measurementAt);
 
         if (affectedRows == 0) {
             create(festival, measurementAt);
@@ -27,14 +26,14 @@ public class ViewRepository {
     }
 
     private void create(Festival festival, LocalDate measurementAt) {
-        View viewEntity = View.builder().view(1).measurementAt(measurementAt).festival(festival)
+        View viewEntity = View.builder().count(1).measurementAt(measurementAt).festival(festival)
             .build();
         entityManager.persist(viewEntity);
     }
 
-    private long updateCount(Festival festival, LocalDate measurementAt, QView view) {
+    private long updateCount(Festival festival, LocalDate measurementAt) {
         return queryFactory.update(view)
-            .set(view.view, view.view.add(1))
+            .set(view.count, view.count.add(1))
             .where(view.festival.id.eq(festival.getId())
                 .and(view.measurementAt.eq(measurementAt)))
             .execute();
