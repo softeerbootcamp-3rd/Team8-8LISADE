@@ -22,5 +22,12 @@
         <action
             android:id="@+id/action_homeListFragment_to_homeCategoryFragment"
             app:destination="@id/homeCategoryFragment" />
+        <action
+            android:id="@+id/action_homeListFragment_to_articleDetailActivity"
+            app:destination="@id/articleDetailActivity" />
     </fragment>
+    <activity
+        android:id="@+id/articleDetailActivity"
+        android:name="com.softeer.togeduck.ui.article_detail.ArticleDetailActivity"
+        android:label="ArticleDetailActivity" />
 </navigation>

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
@@ -86,12 +87,12 @@ class HomeListFragment : Fragment() {
         categoryAdapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
                 Log.d("TESTLOG", "카테고리 클릭")
-//                findNavController().navigate(R.id.action_homeCategoryFragment_to_homeListFragment)
+
             }
         }
         articleAdapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
-                Log.d("TESTLOG", "아티클 클릭")
+                findNavController().navigate(R.id.action_homeListFragment_to_articleDetailActivity)
             }
         }
     }

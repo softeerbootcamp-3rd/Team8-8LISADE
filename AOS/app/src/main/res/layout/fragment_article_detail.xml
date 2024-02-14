@@ -17,12 +17,85 @@
             android:layout_height="wrap_content"
             android:text="싸이흠뻑쇼 SUMMERSWAG2023 - 서울"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/placeText"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
             />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineContents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.37"/>
+        <TextView
+            android:id="@+id/placeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장소"
+            app:layout_constraintEnd_toStartOf="@id/guidelineContents"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/articleDetailTitle"
+            app:layout_constraintBottom_toTopOf="@id/periodText"
+            />
+        <TextView
+            android:id="@+id/articleDetailPlace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="잠실 종합운동장 올림픽주경기장"
+            app:layout_constraintTop_toBottomOf="@id/articleDetailTitle"
+            app:layout_constraintStart_toEndOf="@id/guidelineContents"
+            app:layout_constraintBottom_toTopOf="@id/articleDetailDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/periodText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기간"
+            app:layout_constraintEnd_toStartOf="@id/articleDetailPlace"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placeText"
+            app:layout_constraintBottom_toTopOf="@id/ageText"
+            />
+        <TextView
+            android:id="@+id/articleDetailDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="2023.06.30 ~ 2023.07.02"
+            app:layout_constraintTop_toBottomOf="@id/articleDetailPlace"
+            app:layout_constraintStart_toEndOf="@id/guidelineContents"
+            app:layout_constraintBottom_toTopOf="@id/articleDetailAge"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/ageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="꽌람연령"
+            app:layout_constraintEnd_toStartOf="@id/guidelineContents"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/periodText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <TextView
+            android:id="@+id/articleDetailAge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="전체 관람가"
+            app:layout_constraintTop_toBottomOf="@id/articleDetailDate"
+            app:layout_constraintStart_toEndOf="@id/guidelineContents"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
