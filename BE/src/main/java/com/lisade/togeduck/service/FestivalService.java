@@ -1,5 +1,6 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
@@ -16,4 +17,6 @@ public interface FestivalService {
     Festival get(Long id);
 
     FestivalDetailDto getDetail(Long id);
+
+    BestFestivalResponse getBest();
 }
