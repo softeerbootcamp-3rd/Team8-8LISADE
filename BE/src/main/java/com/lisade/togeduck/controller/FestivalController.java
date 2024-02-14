@@ -1,5 +1,6 @@
 package com.lisade.togeduck.controller;
 
+import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.enums.Category;
@@ -23,7 +24,7 @@ public class FestivalController {
 
     private final FestivalService festivalService;
 
-    @GetMapping("")
+    @GetMapping
     public Slice<FestivalDto> getList(
         @PageableDefault(size = 10, sort = "startedAt", direction = Direction.ASC) Pageable pageable,
         @RequestParam(name = "category", required = true) Category category,
@@ -37,4 +38,8 @@ public class FestivalController {
         return festivalService.getDetail(id);
     }
 
+    @GetMapping("/best")
+    public BestFestivalResponse getBest() {
+        return festivalService.getBest();
+    }
 }
