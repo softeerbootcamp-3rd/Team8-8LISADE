@@ -48,10 +48,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid LoginDto loginDto,
         HttpServletRequest request) {
-        User findUser = userService.login(loginDto);
+        User loginUser = userService.login(loginDto);
         HttpSession session = request.getSession();
-        session.setAttribute(LOGIN_USER.getSessionName(), findUser);
-        return ResponseEntity.ok(ApiResponse.onSuccess(findUser.getUserId()));
+        session.setAttribute(LOGIN_USER.getSessionName(), loginUser);
+        return ResponseEntity.ok(ApiResponse.onSuccess(loginUser.getUserId()));
     }
 
     @GetMapping("/routes")
