@@ -1,5 +1,6 @@
 package com.lisade.togeduck.mapper;
 
+import com.lisade.togeduck.dto.response.BusLayoutDto;
 import com.lisade.togeduck.dto.response.SeatDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
 import com.lisade.togeduck.entity.Route;
@@ -14,21 +15,17 @@ public class SeatMapper {
         return SeatDto.builder()
             .id(seat.getId())
             .seatNo(seat.getNo())
-            .status(seat.getStatus().toString())
+            .status(seat.getStatus())
             .build();
     }
 
-    public static SeatListDto toSeatListDto(List<Seat> seats) {
-        Route route = seats.get(0).getRoute();
-
+    public static SeatListDto toSeatListDto(BusLayoutDto busLayoutDto, List<SeatDto> seats) {
         return SeatListDto.builder()
-            .numberOfSeats(seats.size())
-            .row(route.getBus().getRow())
-            .col(route.getBus().getColumn())
-            .backSeats(route.getBus().getBackSeats())
-            .seats(seats.stream()
-                .map(SeatMapper::toSeatDto)
-                .toList())
+            .numberOfSeats(busLayoutDto.getNumberOfSeats())
+            .row(busLayoutDto.getRow())
+            .col(busLayoutDto.getCol())
+            .backSeats(busLayoutDto.getBackSeats())
+            .seats(seats)
             .build();
     }
 

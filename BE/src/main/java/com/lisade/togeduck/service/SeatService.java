@@ -1,6 +1,8 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
+import com.lisade.togeduck.dto.response.BusLayoutDto;
+import com.lisade.togeduck.dto.response.SeatDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
@@ -26,9 +28,9 @@ public class SeatService {
     private final SeatRepository seatRepository;
 
     public SeatListDto getList(Long routeId) {
-        List<Seat> seats = seatRepository.findAllByRouteId(routeId);
-
-        return SeatMapper.toSeatListDto(seats);
+        BusLayoutDto busLayoutByRouteId = seatRepository.findBusLayoutByRouteId(routeId);
+        List<SeatDto> seats = seatRepository.findSeatsByRouteId(routeId);
+        return SeatMapper.toSeatListDto(busLayoutByRouteId, seats);
     }
 
     @Transactional
