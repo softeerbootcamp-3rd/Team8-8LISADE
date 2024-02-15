@@ -1,5 +1,6 @@
 package com.lisade.togeduck.dto.response;
 
+import com.lisade.togeduck.entity.enums.SeatStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,5 +14,6 @@ public class SeatDto {
 
     private Long id;
     private Integer seatNo;
-    private String status;
+    private SeatStatus status;
+
 }
