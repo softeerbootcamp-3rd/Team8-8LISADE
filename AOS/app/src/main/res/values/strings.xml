@@ -23,7 +23,7 @@
     <string name="seating_chart">좌석 배치도</string>
     <string name="estimatedTime">예상 소요 시간</string>
     <string name="time">시간</string>
-    <string name="recruitment_status">모집현황</string>
+    <string name="recruitment_status">모집 현황</string>
     <string name="cost">금액</string>
     <string name="krw">원</string>
     <string name="departure">출발</string>
@@ -48,6 +48,8 @@
     <string name="total_price">총 결제금액</string>
     <string name="driver_seat">운전석</string>
     <string name="entrance">출입구</string>
+    <string name="make_payment">결제하기</string>
+    <string name="payment_notice">결제를 완료 해야 승차권 구매가 완료 됩니다.\n마감 기한 까지 출발 미확정 시 환불 됩니다.</string>
 
     <string name="search">검색</string>
     <string name="popular_article_title">HOT DUCK</string>

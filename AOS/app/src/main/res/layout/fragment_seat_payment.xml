@@ -6,9 +6,384 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.seat.SeatPaymentFragment">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/guideline_contents" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/guideline_contents" />
+
+    <!--타이틀-->
+    <View
+        android:id="@+id/header_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="@id/guideRight"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="@id/guideLeft"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/icon_back"
+        app:layout_constraintBottom_toBottomOf="@id/header_top"
+        app:layout_constraintStart_toStartOf="@id/header_top"
+        app:layout_constraintTop_toTopOf="@id/header_top" />
+
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="노선 결제"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/header_top"
+        app:layout_constraintEnd_toEndOf="@id/header_top"
+        app:layout_constraintStart_toStartOf="@id/header_top"
+        app:layout_constraintTop_toTopOf="@id/header_top" />
+    <!--end 타이틀-->
+
+    <TextView
+        android:id="@+id/festivalNameWrapper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="좌석 결제" />
+        android:layout_height="60dp"
+        android:background="@color/gray100"
+        app:layout_constraintTop_toBottomOf="@id/header_top" />
+
+    <TextView
+        android:id="@+id/festivalNameValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:text="행사명 입니다."
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/festivalNameWrapper"
+        app:layout_constraintStart_toStartOf="@id/guideLeft"
+        app:layout_constraintTop_toTopOf="@id/festivalNameWrapper" />
+
+    <TextView
+        android:id="@+id/festivalDateWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/main"
+        app:layout_constraintTop_toBottomOf="@id/festivalNameWrapper" />
+
+    <TextView
+        android:id="@+id/festivalDateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:text="2024. 02. 05 (월)"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/festivalDateWrapper"
+        app:layout_constraintStart_toStartOf="@id/guideLeft"
+        app:layout_constraintTop_toTopOf="@id/festivalDateWrapper" />
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/paymentContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/festivalDateWrapper">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="40dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideContentLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="32dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideContentRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="32dp" />
+
+            <ImageView
+                android:id="@+id/iconSpDp"
+                android:layout_width="15dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/icon_sp_dp"
+                app:layout_constraintStart_toStartOf="@id/guideContentLeft"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/departureText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-8dp"
+                android:text="@string/departure"
+                android:textColor="@color/gray300"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@id/iconSpDp"
+                app:layout_constraintTop_toTopOf="@id/iconSpDp" />
+
+            <TextView
+                android:id="@id/departurePlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="출발지점 입니다."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/departureText"
+                app:layout_constraintStart_toEndOf="@id/departureText"
+                app:layout_constraintTop_toTopOf="@id/departureText" />
+
+            <TextView
+                android:id="@+id/departureTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09:00"
+                android:textColor="@color/gray300"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/departureText"
+                app:layout_constraintEnd_toEndOf="@id/guideContentRight"
+                app:layout_constraintTop_toTopOf="@id/departureText" />
+
+            <TextView
+                android:id="@+id/arrivalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-9dp"
+                android:text="@string/arrival"
+                android:textColor="@color/gray300"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/iconSpDp"
+                app:layout_constraintStart_toStartOf="@id/departureText" />
+
+            <TextView
+                android:id="@id/arrivalPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="도착지점 입니다."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/arrivalText"
+                app:layout_constraintStart_toStartOf="@id/departurePlace" />
+
+            <TextView
+                android:id="@+id/estimatedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:text="@string/expected"
+                android:textColor="@color/gray300"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/arrivalText"
+                app:layout_constraintEnd_toStartOf="@id/arrivalTime" />
+
+
+            <TextView
+                android:id="@+id/arrivalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14:30"
+                android:textColor="@color/gray300"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/arrivalText"
+                app:layout_constraintEnd_toEndOf="@id/guideContentRight" />
+
+
+            <TextView
+                android:id="@+id/busType"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/rectangle_radius"
+                android:backgroundTint="@color/mint"
+                android:gravity="center"
+                android:text="28인승"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/guideContentLeft"
+                app:layout_constraintTop_toBottomOf="@id/arrivalTime" />
+
+            <TextView
+                android:id="@+id/recruitmentStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/recruitment_status"
+                android:textColor="@color/gray300"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/guideContentLeft"
+                app:layout_constraintTop_toBottomOf="@id/busType" />
+
+            <TextView
+                android:id="@+id/recruitmentStatusValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="4 / 28"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/recruitmentStatusText"
+                app:layout_constraintStart_toEndOf="@id/recruitmentStatusText"
+                app:layout_constraintTop_toTopOf="@id/recruitmentStatusText" />
+
+            <TextView
+                android:id="@+id/seatText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/seat"
+                android:textColor="@color/gray300"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/guideContentLeft"
+                app:layout_constraintTop_toBottomOf="@id/recruitmentStatusText" />
+
+            <TextView
+                android:id="@+id/seatValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/seatText"
+                app:layout_constraintStart_toStartOf="@id/recruitmentStatusValue"
+                app:layout_constraintTop_toTopOf="@id/seatText" />
+
+            <TextView
+                android:id="@+id/costText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/cost"
+                android:textColor="@color/gray300"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/guideContentLeft"
+                app:layout_constraintTop_toBottomOf="@id/seatText" />
+
+            <TextView
+                android:id="@+id/costValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50,000"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/costText"
+                app:layout_constraintStart_toStartOf="@id/recruitmentStatusValue"
+                app:layout_constraintTop_toTopOf="@id/costText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/paymentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/gray100"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/iconNotice"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@color/transparent"
+        android:src="@drawable/icon_alert"
+        app:layout_constraintBottom_toTopOf="@id/costInfoContainer"
+        app:layout_constraintStart_toStartOf="@id/guideLeft"
+        app:layout_constraintTop_toTopOf="@id/paymentContainer" />
+
+    <TextView
+        android:id="@+id/noticeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@color/transparent"
+        android:text="@string/payment_notice"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/costInfoContainer"
+        app:layout_constraintStart_toEndOf="@id/iconNotice"
+        app:layout_constraintTop_toTopOf="@id/paymentContainer" />
+
+    <View
+        android:id="@+id/costInfoContainer"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rectangle_radius"
+        app:layout_constraintBottom_toTopOf="@id/paymentBtn"
+        app:layout_constraintEnd_toEndOf="@id/guideRight"
+        app:layout_constraintStart_toStartOf="@id/guideLeft" />
+
+    <TextView
+        android:id="@+id/totalPriceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@color/transparent"
+        android:text="@string/total_price"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/costInfoContainer"
+        app:layout_constraintStart_toStartOf="@id/guideLeft"
+        app:layout_constraintTop_toTopOf="@id/costInfoContainer" />
+
+    <TextView
+        android:id="@+id/totalPriceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@color/transparent"
+        android:text="50,000"
+        android:textColor="@color/main"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/costInfoContainer"
+        app:layout_constraintEnd_toStartOf="@id/krw"
+        app:layout_constraintTop_toTopOf="@id/costInfoContainer" />
+
+    <TextView
+        android:id="@+id/krw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@color/transparent"
+        android:text="@string/krw"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/costInfoContainer"
+        app:layout_constraintEnd_toEndOf="@id/guideRight"
+        app:layout_constraintTop_toTopOf="@id/costInfoContainer" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/paymentBtn"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/navy300"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/make_payment"
+        android:textSize="18sp"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/paymentContainer"
+        app:layout_constraintEnd_toEndOf="@id/guideRight"
+        app:layout_constraintStart_toStartOf="@id/guideLeft" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
