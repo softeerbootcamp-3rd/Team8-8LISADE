@@ -50,6 +50,9 @@
     <string name="entrance">출입구</string>
     <string name="make_payment">결제하기</string>
     <string name="payment_notice">결제를 완료 해야 승차권 구매가 완료 됩니다.\n마감 기한 까지 출발 미확정 시 환불 됩니다.</string>
+    <string name="move_to_home">홈으로 이동</string>
+    <string name="move_to_reserve_status">예약 내역 이동</string>
+    <string name="complete_payment_phase">결제가 완료되었습니다.</string>
 
     <string name="search">검색</string>
     <string name="popular_article_title">HOT DUCK</string>
