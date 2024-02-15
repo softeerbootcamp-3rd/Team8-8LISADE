@@ -27,6 +27,7 @@ public class SeatService {
     private final UserRouteRepository userRouteRepository;
     private final SeatRepository seatRepository;
 
+    @Transactional(readOnly = true)
     public SeatListDto getList(Long routeId) {
         BusLayoutDto busLayoutByRouteId = seatRepository.findBusLayoutByRouteId(routeId);
         List<SeatDto> seats = seatRepository.findSeatsByRouteId(routeId);
