@@ -1,5 +1,6 @@
 package com.softeer.togeduck.ui.home.seat
 
+import android.graphics.drawable.RippleDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatSelectBinding
 
@@ -56,5 +58,9 @@ class SeatSelectFragment : Fragment() {
                 selectCompleteBtn.isEnabled = selectCompleteBtnEnabled
             }
         })
+
+        binding.selectCompleteBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_seatSelectFragment_to_seatPaymentFragment)
+        }
     }
 }
