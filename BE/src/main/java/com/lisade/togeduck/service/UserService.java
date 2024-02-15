@@ -1,5 +1,8 @@
 package com.lisade.togeduck.service;
 
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
@@ -15,6 +18,7 @@ import com.lisade.togeduck.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +64,11 @@ public class UserService {
         if (userRepository.existsByUserId(userId)) {
             throw new UserIdAlreadyExistsException();
         }
+    }
+
+    public Slice<UserReservedRouteDto> getReservedRouteList(
+        @PageableDefault(sort = "createdDate", direction = DESC) Pageable pageable, Long userId) {
+        return routeRepository.findReservedRoutes(pageable, userId);
     }
 
     private void validateByNickname(String nickname) {

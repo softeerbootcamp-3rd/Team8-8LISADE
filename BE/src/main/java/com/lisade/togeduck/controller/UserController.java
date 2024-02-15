@@ -1,7 +1,6 @@
 package com.lisade.togeduck.controller;
 
 import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
-import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import com.lisade.togeduck.annotation.Login;
@@ -18,7 +17,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,8 +54,7 @@ public class UserController {
 
     @GetMapping("/routes")
     public Slice<UserReservedRouteDto> getRoutes(
-        @Login User user,
-        @PageableDefault(sort = "createdDate", direction = DESC) Pageable pageable) {
+        @Login User user, Pageable pageable) {
         if (user == null) {
             throw new UnAuthenticationException();
         }
