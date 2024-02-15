@@ -45,7 +45,7 @@ class SeatSelectFragment : Fragment() {
             var selectCompleteBtnEnabled = false
 
             if (selectSeat.value == true) {
-                vgColor = R.color.main
+                vgColor = R.color.navy300
                 selectCompleteBtnEnabled = true
             }
 
