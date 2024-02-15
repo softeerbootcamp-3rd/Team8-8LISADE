@@ -33,4 +33,7 @@ public class City {
 
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     private List<Station> stations;
+
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+    private List<Festival> festivals;
 }

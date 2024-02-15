@@ -48,6 +48,10 @@ public class Festival extends BaseEntity {
     @Column(name = "location", nullable = false, length = 200)
     private String location;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", nullable = false)
+    private City city;
+
     @Column(name = "x_pos", nullable = false)
     private Double xPos;
 
