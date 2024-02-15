@@ -19,8 +19,13 @@ public class SeatMapper {
     }
 
     public static SeatListDto toSeatListDto(List<Seat> seats) {
+        Route route = seats.get(0).getRoute();
+
         return SeatListDto.builder()
             .numberOfSeats(seats.size())
+            .row(route.getBus().getRow())
+            .col(route.getBus().getColumn())
+            .backSeats(route.getBus().getBackSeats())
             .seats(seats.stream()
                 .map(SeatMapper::toSeatDto)
                 .toList())

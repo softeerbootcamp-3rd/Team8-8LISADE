@@ -13,5 +13,8 @@ import lombok.NoArgsConstructor;
 public class SeatListDto {
 
     private Integer numberOfSeats;
+    private Integer row;
+    private Integer col;
+    private Integer backSeats;
     private List<SeatDto> seats;
 }
