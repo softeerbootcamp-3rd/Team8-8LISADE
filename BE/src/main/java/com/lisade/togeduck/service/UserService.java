@@ -3,10 +3,12 @@ package com.lisade.togeduck.service;
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
 import com.lisade.togeduck.exception.NicknameAlreadyExistsException;
+import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.UserIdAlreadyExistsException;
 import com.lisade.togeduck.exception.UserNotFoundException;
 import com.lisade.togeduck.global.response.ApiResponse;
@@ -63,7 +65,9 @@ public class UserService {
     }
 
     public Optional<UserReservedRouteDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
-        return routeRepository.findReservedRouteInfo(userId, routeId);
+        RouteAndFestivalInfo routeAndFestivalInfo = routeRepository.findRouteAndFestivalInfo(
+            routeId).orElseThrow(RouteNotFoundException::new);
+        return Optional.empty();
     }
 
     private void validateByUserId(String userId) {

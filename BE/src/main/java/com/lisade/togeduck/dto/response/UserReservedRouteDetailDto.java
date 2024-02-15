@@ -34,6 +34,38 @@ public class UserReservedRouteDetailDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class RouteAndFestivalInfo {
+
+        private Long festivalId;
+        private String title;
+        private LocalTime expectedDuration;
+        private String status;
+        private Integer price;
+        private LocalDateTime startedAt;
+        private String festivalLocation;
+        private String festivalCity;
+        private String imagePath;
+
+        @Override
+        public String toString() {
+            return "RouteAndFestivalInfo{" +
+                "festivalId=" + festivalId +
+                ", title='" + title + '\'' +
+                ", expectedDuration=" + expectedDuration +
+                ", status='" + status + '\'' +
+                ", price=" + price +
+                ", imagePath='" + imagePath + '\'' +
+                ", startedAt=" + startedAt +
+                ", festivalLocation='" + festivalLocation + '\'' +
+                ", festivalCity='" + festivalCity + '\'' +
+                '}';
+        }
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class DriverInfo {
 
         private Long id;

@@ -1,8 +1,7 @@
 package com.lisade.togeduck.repository;
 
 import static com.lisade.togeduck.entity.QBus.bus;
-import static com.lisade.togeduck.entity.QDriver.driver;
-import static com.lisade.togeduck.entity.QDriverRoute.driverRoute;
+import static com.lisade.togeduck.entity.QCity.city;
 import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QFestivalImage.festivalImage;
 import static com.lisade.togeduck.entity.QRoute.route;
@@ -12,7 +11,7 @@ import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.Projections;
@@ -90,45 +89,31 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     @Override
-    public Optional<UserReservedRouteDetailDto> findReservedRouteInfo(Long userId, Long routeId) {
-        UserReservedRouteDetailDto userReservedRouteDetailDto = queryFactory.select(
-                Projections.constructor(
-                    UserReservedRouteDetailDto.class,
-                    festival.id,
-                    festival.title,
-                    seat.no,
-                    route.expectedTime,
-                    route.status.stringValue(),
-                    bus.numberOfSeats,
-                    getReservationSeats(),
-                    route.price,
-                    festivalImage.path,
-                    route.startedAt,
-                    route.expectedTime, //todo 도착시간으로 변경
-                    station.name,
-                    festival.location
-//                    Projections.constructor(UserReservedRouteDetailDto.DriverInfo.class, driver.id,
-//                        driver.name, driver.company, driver.phoneNumber, driverRoute.carNumber)
-                ))
+    public Optional<RouteAndFestivalInfo> findRouteAndFestivalInfo(Long routeId) {
+        RouteAndFestivalInfo routeAndFestivalInfo = queryFactory.select(Projections.constructor(
+                RouteAndFestivalInfo.class,
+                festival.id,
+                festival.title,
+                route.expectedTime,
+                route.status.stringValue(),
+                route.price,
+                route.startedAt,
+                festival.location,
+                festival.city.name,
+                festivalImage.path))
             .from(route)
-            .join(station)
-            .on(route.station.eq(station))
             .join(festival)
-            .on(festival.eq(route.festival))
-            .join(bus)
-            .on(route.bus.eq(bus))
+            .on(route.festival.eq(festival))
             .join(festivalImage)
-            .on(festivalImage.festival.eq(festival))
-            .join(seat)
-            .on(seat.route.eq(route))
-            .join(driverRoute)
-            .on(driverRoute.route.eq(route))
-            .join(driver)
-            .on(driverRoute.driver.eq(driver))
-            .where(route.id.eq(routeId)) //todo 수정
+            .on(festivalImage.festival.eq(festival)
+                .and(festivalImage.id.eq(getMinFestivalImageId())))
+            .join(city)
+            .on(festival.city.eq(city))
+            .where(route.id.eq(routeId))
             .fetchOne();
-        return Optional.ofNullable(userReservedRouteDetailDto);
+        return Optional.ofNullable(routeAndFestivalInfo);
     }
+
 
     private JPQLQuery<Long> getMinFestivalImageId() {
         return JPAExpressions.select(festivalImage.id.min())
