@@ -1,6 +1,5 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
 import com.lisade.togeduck.dto.response.BusLayoutDto;
 import com.lisade.togeduck.dto.response.SeatDto;
@@ -10,6 +9,7 @@ import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.UserRoute;
 import com.lisade.togeduck.entity.enums.SeatStatus;
+import com.lisade.togeduck.exception.FestivalNotIncludeRouteException;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
 import com.lisade.togeduck.exception.SeatNotFoundException;
@@ -35,6 +35,7 @@ public class SeatService {
     public SeatListDto getList(Long routeId) {
         BusLayoutDto busLayoutByRouteId = busService.getBusLayout(routeId);
         List<SeatDto> seats = seatRepository.findSeatsByRouteId(routeId);
+        validateSeats(seats);
         return SeatMapper.toSeatListDto(busLayoutByRouteId, seats);
     }
 
@@ -45,16 +46,16 @@ public class SeatService {
 
     @Transactional
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    public Long register(@Login User user, Long routeId, SeatRegistrationDto seatRegistration) {
+    public Long register(User user, Long festivalId, Long routeId,
+        SeatRegistrationDto seatRegistration) {
         Seat seat = get(routeId, seatRegistration.getNo());
         Route route = seat.getRoute();
 
-        if (seat.getStatus().equals(SeatStatus.RESERVATION)) {
-            throw new SeatAlreadyRegisterException();
-        }
+        validateSeat(seat);
+        validateRoute(route, festivalId);
 
         seat.setStatus(SeatStatus.RESERVATION);
-        
+
         UserRoute userRoute = UserRoute.builder()
             .user(user)
             .seat(seat)
@@ -67,5 +68,23 @@ public class SeatService {
     public Seat get(Long routeId, Integer no) {
         return seatRepository.findByRouteIdAndNo(routeId, no).orElseThrow(
             SeatNotFoundException::new);
+    }
+
+    private void validateRoute(Route route, Long festivalId) {
+        if (!route.getFestival().getId().equals(festivalId)) {
+            throw new FestivalNotIncludeRouteException();
+        }
+    }
+
+    private void validateSeat(Seat seat) {
+        if (seat.getStatus().equals(SeatStatus.RESERVATION)) {
+            throw new SeatAlreadyRegisterException();
+        }
+    }
+
+    private void validateSeats(List<Seat> seats) {
+        if (seats.isEmpty()) {
+            throw new RouteNotFoundException();
+        }
     }
 }
