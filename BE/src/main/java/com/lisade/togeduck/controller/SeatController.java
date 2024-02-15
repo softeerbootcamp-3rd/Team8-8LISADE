@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/festivals/{festival_id}/routes/{route_id}")
+@RequestMapping("/festivals/{festival_id}/routes/{route_id}/seats")
 public class SeatController {
 
     private final SeatService seatService;
 
-    @GetMapping("/seats")
+    @GetMapping
     public SeatListDto getList(
         @PathVariable(name = "festival_id") Long festivalId,
         @PathVariable(name = "route_id") Long routeId) {
         return seatService.getList(routeId);
     }
 
-    @PostMapping("/seats")
+    @PostMapping
     public void register(
         @PathVariable(name = "festival_id") Long festivalId,
         @PathVariable(name = "route_id") Long routeId,
