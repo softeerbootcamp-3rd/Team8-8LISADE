@@ -1,23 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_seat"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_seat"
     app:startDestination="@id/seatSelectFragment">
 
-    <fragment android:id="@+id/seatPaymentFragment"
+    <fragment
+        android:id="@+id/seatPaymentFragment"
         android:name="com.softeer.togeduck.ui.home.seat.SeatPaymentFragment"
-        android:label="fragment_seat_payment" tools:layout="@layout/fragment_seat_payment">
-        <action android:id="@+id/action_seatPaymentFragment_to_seatPaymentCompleteFragment"
-            app:destination="@id/seatPaymentCompleteFragment" app:popUpTo="@id/nav_seat" />
+        android:label="fragment_seat_payment"
+        tools:layout="@layout/fragment_seat_payment">
+        <action
+            android:id="@+id/action_seatPaymentFragment_to_seatPaymentCompleteFragment"
+            app:destination="@id/seatPaymentCompleteFragment"
+            app:popUpTo="@id/nav_seat" />
     </fragment>
-    <fragment android:id="@+id/seatSelectFragment"
+    <fragment
+        android:id="@+id/seatSelectFragment"
         android:name="com.softeer.togeduck.ui.home.seat.SeatSelectFragment"
-        android:label="fragment_seat_select" tools:layout="@layout/fragment_seat_select">
-        <action android:id="@+id/action_seatSelectFragment_to_seatPaymentFragment"
+        android:label="fragment_seat_select"
+        tools:layout="@layout/fragment_seat_select">
+        <action
+            android:id="@+id/action_seatSelectFragment_to_seatPaymentFragment"
             app:destination="@id/seatPaymentFragment" />
     </fragment>
-    <fragment android:id="@+id/seatPaymentCompleteFragment"
+    <fragment
+        android:id="@+id/seatPaymentCompleteFragment"
         android:name="com.softeer.togeduck.ui.home.seat.SeatPaymentCompleteFragment"
         android:label="fragment_seat_payment_complete"
-        tools:layout="@layout/fragment_seat_payment_complete" />
+        tools:layout="@layout/fragment_seat_payment_complete">
+        <action
+            android:id="@+id/action_seatPaymentCompleteFragment_to_reserveStatusDetailActivity"
+            app:destination="@id/reserveStatusDetailActivity" />
+        <action
+            android:id="@+id/action_seatPaymentCompleteFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.softeer.togeduck.MainActivity"
+        android:label="MainActivity" />
+    <activity
+        android:id="@+id/reserveStatusDetailActivity"
+        android:name="com.softeer.togeduck.ui.reserve_status.detail.ReserveStatusDetailActivity"
+        android:label="activity_reserve_status_detail"
+        tools:layout="@layout/activity_reserve_status_detail" />
 </navigation>

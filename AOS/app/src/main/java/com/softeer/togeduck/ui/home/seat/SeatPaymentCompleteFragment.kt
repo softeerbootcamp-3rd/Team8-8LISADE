@@ -5,9 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
+import com.softeer.togeduck.databinding.FragmentSeatPaymentCompleteBinding
 
 class SeatPaymentCompleteFragment : Fragment() {
+    private var _binding: FragmentSeatPaymentCompleteBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -16,7 +21,25 @@ class SeatPaymentCompleteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seat_payment_complete, container, false)
+        _binding = FragmentSeatPaymentCompleteBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init()
+    }
+
+    private fun init() {
+        binding.run {
+            moveHomeBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_seatPaymentCompleteFragment_to_mainActivity)
+            }
+            moveReserveStatusBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_seatPaymentCompleteFragment_to_reserveStatusDetailActivity)
+            }
+        }
     }
 }
