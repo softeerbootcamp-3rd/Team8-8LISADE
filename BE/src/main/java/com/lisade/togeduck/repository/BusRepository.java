@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BusRepository extends JpaRepository<Bus, Long> {
+public interface BusRepository extends JpaRepository<Bus, Long>, BusCustomRepository {
 
     @Query("select b from Bus b join fetch b.priceTables where b.id =:busId")
     Optional<Bus> findBusByIdWithPriceTable(Long busId);

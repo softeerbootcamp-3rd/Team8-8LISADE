@@ -26,10 +26,11 @@ public class SeatService {
 
     private final UserRouteRepository userRouteRepository;
     private final SeatRepository seatRepository;
+    private final BusService busService;
 
     @Transactional(readOnly = true)
     public SeatListDto getList(Long routeId) {
-        BusLayoutDto busLayoutByRouteId = seatRepository.findBusLayoutByRouteId(routeId);
+        BusLayoutDto busLayoutByRouteId = busService.getBusLayout(routeId);
         List<SeatDto> seats = seatRepository.findSeatsByRouteId(routeId);
         return SeatMapper.toSeatListDto(busLayoutByRouteId, seats);
     }
