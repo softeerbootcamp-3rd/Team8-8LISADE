@@ -29,6 +29,7 @@ public class SeatController {
 
     @PostMapping
     public void register(
+        @Login User user,
         @PathVariable(name = "festival_id") Long festivalId,
         @PathVariable(name = "route_id") Long routeId,
         @RequestBody SeatRegistrationDto seatRegistration) {
