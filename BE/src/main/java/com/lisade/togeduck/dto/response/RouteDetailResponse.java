@@ -16,6 +16,6 @@ public class RouteDetailResponse {
     LocalTime expectedAt;
     LocalTime arrivalAt;
     Integer totalSeats;
-    Long reservedSeats;
+    Integer reservedSeats;
     Integer cost;
 }
