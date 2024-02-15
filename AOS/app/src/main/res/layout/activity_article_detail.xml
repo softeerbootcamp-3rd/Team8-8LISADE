@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="상세정보"
             android:textColor="@color/gray300"
+            android:enabled="false"
             app:layout_constraintEnd_toStartOf="@id/routeButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/articleImg" />
@@ -54,17 +55,16 @@
             app:layout_constraintTop_toBottomOf="@id/routeButton" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/introFragmentContainerView"
+            android:id="@+id/detailFragmentContainerView"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:navGraph="@navigation/nav_detail" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

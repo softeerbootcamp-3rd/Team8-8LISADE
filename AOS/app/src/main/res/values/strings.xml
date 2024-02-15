@@ -61,4 +61,5 @@
         <item>최신순</item>
     </string-array>
     <string name="entire">전체</string>
+    <string name="route">노선</string>
 </resources>
