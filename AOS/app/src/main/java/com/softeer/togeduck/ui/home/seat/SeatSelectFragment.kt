@@ -39,20 +39,21 @@ class SeatSelectFragment : Fragment() {
         val selectSeat = seatSelectView.selectSeat
 
         selectSeat.observe(viewLifecycleOwner, Observer {
-            if (selectSeat!!.value == true) {
-                binding.selectCompleteBtn.setBackgroundColor(
+            var vgColor = R.color.gray300
+            var selectCompleteBtnEnabled = false
+
+            if (selectSeat.value == true) {
+                vgColor = R.color.main
+                selectCompleteBtnEnabled = true
+            }
+
+            binding.run {
+                selectCompleteBtn.setBackgroundColor(
                     ContextCompat.getColor(
-                        requireContext(), R.color.navy300
+                        requireContext(), vgColor
                     )
                 )
-                binding.selectCompleteBtn.isEnabled = true
-            } else {
-                binding.selectCompleteBtn.setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(), R.color.gray300
-                    )
-                )
-                binding.selectCompleteBtn.isEnabled = false
+                selectCompleteBtn.isEnabled = selectCompleteBtnEnabled
             }
         })
     }
