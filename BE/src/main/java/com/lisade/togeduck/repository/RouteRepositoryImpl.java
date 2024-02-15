@@ -10,6 +10,7 @@ import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.Projections;
@@ -83,6 +84,11 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             hasNext = true;
         }
         return new SliceImpl<>(userReservedRoutes, pageable, hasNext);
+    }
+
+    @Override
+    public Optional<UserReservedRouteDetailDto> findReservedRouteInfo(Long userId, Long routeId) {
+        return Optional.empty();
     }
 
     private JPQLQuery<Long> getMinFestivalImageId() {

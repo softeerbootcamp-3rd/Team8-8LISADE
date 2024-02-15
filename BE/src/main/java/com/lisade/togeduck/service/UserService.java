@@ -5,7 +5,7 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
-import com.lisade.togeduck.dto.response.UserReservationDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
@@ -79,7 +79,7 @@ public class UserService {
         }
     }
 
-    public Optional<UserReservationDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
+    public Optional<UserReservedRouteDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
         return routeRepository.findReservedRouteInfo(userId, routeId);
     }
 

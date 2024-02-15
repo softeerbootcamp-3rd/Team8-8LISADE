@@ -6,7 +6,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
-import com.lisade.togeduck.dto.response.UserReservationDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.UnAuthenticationException;
@@ -63,8 +63,12 @@ public class UserController {
     }
 
     @GetMapping("/routes/{route_id}")
-    public UserReservationDetailDto getRouteInfo(@Login User user,
+    public UserReservedRouteDetailDto getRouteInfo(@Login User user,
         @PathVariable(name = "route_id") Long routeId) {
-        return userService.getReservedRouteInfo(user.getId(), routeId).orElseThrow();
+        if (user == null) {
+            throw new UnAuthenticationException();
+        }
+        return userService.getReservedRouteInfo(user.getId(), routeId)
+            .orElseThrow(RuntimeException::new);
     }
 }
