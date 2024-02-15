@@ -1,18 +1,21 @@
 package com.lisade.togeduck.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
-import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.UserRoute;
-import com.lisade.togeduck.entity.enums.RouteStatus;
 import com.lisade.togeduck.entity.enums.SeatStatus;
+import com.lisade.togeduck.exception.RouteNotFoundException;
+import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
+import com.lisade.togeduck.exception.SeatNotFoundException;
 import com.lisade.togeduck.repository.SeatRepository;
 import com.lisade.togeduck.repository.UserRouteRepository;
 import java.util.ArrayList;
@@ -30,8 +33,6 @@ class SeatServiceTest {
 
     @InjectMocks
     private SeatService seatService;
-    @Mock
-    private RouteService routeService;
     @Mock
     private SeatRepository seatRepository;
     @Mock
@@ -56,6 +57,21 @@ class SeatServiceTest {
     }
 
     @Test
+    @DisplayName("존재하지 않는 Route가 주어질 때 좌석 조회 실패 테스트")
+    void getSeatsOfRouteWithNonExistRouteTest() {
+        // given
+        List<Seat> response = new ArrayList<>();
+
+        doReturn(response)
+            .when(seatRepository).findAllByRouteId(any(Long.class));
+
+        // when & then
+        assertThrows(RouteNotFoundException.class, () -> {
+            SeatListDto seatListDto = seatService.getList(1L);
+        });
+    }
+
+    @Test
     @DisplayName("좌석 등록 성공 테스트")
     void registerSeatTest() {
         // given
@@ -66,21 +82,20 @@ class SeatServiceTest {
             .no(no)
             .build();
 
-        Route route = Route.builder()
-            .id(routeId)
-            .status(RouteStatus.PROGRESS)
-            .build();
-
         Seat seat = Seat.builder()
             .no(no)
             .status(SeatStatus.AVAILABLE)
             .build();
 
-        doReturn(route).when(routeService)
-            .get(routeId);
+        UserRoute userRoute = UserRoute.builder()
+            .id(1L)
+            .build();
 
         doReturn(Optional.of(seat)).when(seatRepository)
             .findByRouteIdAndNo(routeId, no);
+
+        doReturn(userRoute).when(userRouteRepository)
+            .save(any(UserRoute.class));
 
         // when
         seatService.register(routeId, request);
@@ -90,6 +105,51 @@ class SeatServiceTest {
             .findByRouteIdAndNo(any(Long.class), any(Integer.class));
         verify(userRouteRepository, times(1))
             .save(any(UserRoute.class));
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 Seat가 주어졌을 때 좌석 등록 실패 테스트")
+    void registerSeatWithNonExistsSeatTest() {
+        // given
+        Long routeId = 1L;
+        Integer no = 1;
+
+        SeatRegistrationDto request = SeatRegistrationDto.builder()
+            .no(no)
+            .build();
+
+        doThrow(SeatNotFoundException.class).when(seatRepository)
+            .findByRouteIdAndNo(routeId, no);
+
+        // when & then
+        assertThrows(SeatNotFoundException.class, () -> {
+            seatService.register(routeId, request);
+        });
+    }
+
+    @Test
+    @DisplayName("해당 Seat가 이미 예약 상태일 때 좌석 등록 실패 테스트")
+    void registerReservationSeatTest() {
+        // given
+        Long routeId = 1L;
+        Integer no = 1;
+
+        SeatRegistrationDto request = SeatRegistrationDto.builder()
+            .no(no)
+            .build();
+
+        Seat seat = Seat.builder()
+            .no(no)
+            .status(SeatStatus.RESERVATION)
+            .build();
+
+        doReturn(Optional.of(seat)).when(seatRepository)
+            .findByRouteIdAndNo(routeId, no);
+
+        // when
+        assertThrows(SeatAlreadyRegisterException.class, () -> {
+            seatService.register(routeId, request);
+        });
     }
 
     private List<Seat> seatsResponse() {
