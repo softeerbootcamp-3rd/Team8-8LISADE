@@ -1,6 +1,7 @@
 package com.softeer.togeduck.ui.article_detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -55,11 +56,11 @@ class RouteFragment : Fragment() {
         _binding = FragmentRouteBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpArrayAdapter()
         init()
+        makePopUp()
     }
     private fun setUpArrayAdapter() {
         val regionArray = resources.getStringArray(R.array.article_detail_sort_list)
@@ -77,7 +78,19 @@ class RouteFragment : Fragment() {
             adapter = RouteListAdapter(dummyData)
         }
     }
-
+    private fun makePopUp(){
+        binding.selectStartRegion.setOnClickListener{
+            val popup = PopupMenu(requireContext(), it)
+            popup.menuInflater.inflate(R.menu.start_region_menu, popup.menu)
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                }
+                true
+            }
+            popup.show()
+            true
+        }
+    }
 
 //    private fun getArticleSize(){
 //        routeViewModel.getItemSize(articleAdapter.itemCount.toString())

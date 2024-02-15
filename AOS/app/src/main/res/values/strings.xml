@@ -75,5 +75,6 @@
     <string name="sejong">세종</string>
     <string name="busan">부산</string>
     <string name="make_route">노선 개설</string>
+    <string name="detail_info">상세정보</string>
 
 </resources>
