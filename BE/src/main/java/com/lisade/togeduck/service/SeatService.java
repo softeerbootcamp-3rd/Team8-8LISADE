@@ -1,11 +1,13 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
 import com.lisade.togeduck.dto.response.BusLayoutDto;
 import com.lisade.togeduck.dto.response.SeatDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.UserRoute;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.lisade.togeduck.exception.RouteNotFoundException;
@@ -43,7 +45,7 @@ public class SeatService {
 
     @Transactional
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    public Long register(Long routeId, SeatRegistrationDto seatRegistration) {
+    public Long register(@Login User user, Long routeId, SeatRegistrationDto seatRegistration) {
         Seat seat = get(routeId, seatRegistration.getNo());
         Route route = seat.getRoute();
 
@@ -52,10 +54,9 @@ public class SeatService {
         }
 
         seat.setStatus(SeatStatus.RESERVATION);
-
-        // TODO User 객체 넣기
+        
         UserRoute userRoute = UserRoute.builder()
-            .user(null)
+            .user(user)
             .seat(seat)
             .route(route)
             .build();
