@@ -106,7 +106,7 @@ public class UserService {
         }
     }
 
-    public Optional<UserReservationDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
+    public Optional<UserReservedRouteDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
         return routeRepository.findReservedRouteInfo(userId, routeId);
     }
 
