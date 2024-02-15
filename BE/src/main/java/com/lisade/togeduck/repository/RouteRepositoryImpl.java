@@ -104,8 +104,8 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .on(route.bus.eq(bus));
     }
 
-    private JPQLQuery<Long> getReservationSeats() {
-        return JPAExpressions.select(seat.id.count())
+    private JPQLQuery<Integer> getReservationSeats() {
+        return JPAExpressions.select(seat.id.count().intValue())
             .from(seat)
             .where(seat.route.id.eq(route.id)
                 .and(seat.status.eq(SeatStatus.RESERVATION)));

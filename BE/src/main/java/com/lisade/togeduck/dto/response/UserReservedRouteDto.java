@@ -19,6 +19,6 @@ public class UserReservedRouteDto {
     private String stationName;
     private Integer price;
     private Integer totalSeats;
-    private Long reservedSeats;
+    private Integer reservedSeats;
     private String imagePath;
 }
