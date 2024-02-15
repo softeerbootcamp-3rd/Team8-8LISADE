@@ -2,6 +2,8 @@ package com.lisade.togeduck.repository;
 
 import static com.lisade.togeduck.entity.QBus.bus;
 import static com.lisade.togeduck.entity.QCity.city;
+import static com.lisade.togeduck.entity.QDriver.driver;
+import static com.lisade.togeduck.entity.QDriverRoute.driverRoute;
 import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QFestivalImage.festivalImage;
 import static com.lisade.togeduck.entity.QRoute.route;
@@ -11,6 +13,7 @@ import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
@@ -129,6 +132,25 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .where(route.id.eq(routeId))
             .fetchOne();
         return Optional.ofNullable(stationInfo);
+    }
+
+    @Override
+    public Optional<DriverInfo> findDriverInfo(Long routeId) {
+        DriverInfo driverInfo = queryFactory.select(Projections.constructor(
+                DriverInfo.class,
+                driver.id,
+                driver.name,
+                driver.company,
+                driver.phoneNumber,
+                driverRoute.carNumber))
+            .from(route)
+            .join(driverRoute)
+            .on(driverRoute.route.eq(route))
+            .join(driver)
+            .on(driverRoute.driver.eq(driver))
+            .where(route.id.eq(routeId))
+            .fetchOne();
+        return Optional.ofNullable(driverInfo);
     }
 
 

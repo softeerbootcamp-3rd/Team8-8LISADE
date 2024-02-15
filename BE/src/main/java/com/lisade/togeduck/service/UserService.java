@@ -3,6 +3,7 @@ package com.lisade.togeduck.service;
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
@@ -65,12 +66,14 @@ public class UserService {
         return routeRepository.findReservedRoutes(pageable, userId);
     }
 
+    @Transactional(readOnly = true)
     public Optional<UserReservedRouteDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
         RouteAndFestivalInfo routeAndFestivalInfo = routeRepository.findRouteAndFestivalInfo(
             routeId).orElseThrow(RouteNotFoundException::new);
         StationInfo stationInfo = routeRepository.findStationInfo(routeId)
             .orElseThrow(RouteNotFoundException::new);
-        System.out.println(stationInfo);
+        DriverInfo driverInfo = routeRepository.findDriverInfo(routeId)
+            .orElseThrow(RouteNotFoundException::new);
         return Optional.empty();
     }
 
