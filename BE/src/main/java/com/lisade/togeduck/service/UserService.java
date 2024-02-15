@@ -5,6 +5,7 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
+import com.lisade.togeduck.dto.response.UserReservationDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
@@ -15,6 +16,7 @@ import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.mapper.UserMapper;
 import com.lisade.togeduck.repository.RouteRepository;
 import com.lisade.togeduck.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -75,6 +77,10 @@ public class UserService {
         if (userRepository.existsByNickname(nickname)) {
             throw new NicknameAlreadyExistsException();
         }
+    }
+
+    public Optional<UserReservationDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
+        return routeRepository.findReservedRouteInfo(userId, routeId);
     }
 
     private void validateByEmail(String email) {
