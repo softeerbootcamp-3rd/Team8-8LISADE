@@ -4,6 +4,7 @@ import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
@@ -67,6 +68,9 @@ public class UserService {
     public Optional<UserReservedRouteDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
         RouteAndFestivalInfo routeAndFestivalInfo = routeRepository.findRouteAndFestivalInfo(
             routeId).orElseThrow(RouteNotFoundException::new);
+        StationInfo stationInfo = routeRepository.findStationInfo(routeId)
+            .orElseThrow(RouteNotFoundException::new);
+        System.out.println(stationInfo);
         return Optional.empty();
     }
 

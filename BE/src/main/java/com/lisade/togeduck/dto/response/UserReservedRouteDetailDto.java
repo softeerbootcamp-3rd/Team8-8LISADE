@@ -45,21 +45,16 @@ public class UserReservedRouteDetailDto {
         private String festivalLocation;
         private String festivalCity;
         private String imagePath;
+    }
 
-        @Override
-        public String toString() {
-            return "RouteAndFestivalInfo{" +
-                "festivalId=" + festivalId +
-                ", title='" + title + '\'' +
-                ", expectedDuration=" + expectedDuration +
-                ", status='" + status + '\'' +
-                ", price=" + price +
-                ", imagePath='" + imagePath + '\'' +
-                ", startedAt=" + startedAt +
-                ", festivalLocation='" + festivalLocation + '\'' +
-                ", festivalCity='" + festivalCity + '\'' +
-                '}';
-        }
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class StationInfo {
+
+        private String name;
+        private String city;
     }
 
     @Getter

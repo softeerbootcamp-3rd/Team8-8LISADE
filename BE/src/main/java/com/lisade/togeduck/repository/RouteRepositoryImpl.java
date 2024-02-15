@@ -12,6 +12,7 @@ import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.Projections;
@@ -112,6 +113,22 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .where(route.id.eq(routeId))
             .fetchOne();
         return Optional.ofNullable(routeAndFestivalInfo);
+    }
+
+    @Override
+    public Optional<StationInfo> findStationInfo(Long routeId) {
+        StationInfo stationInfo = queryFactory.select(Projections.constructor(
+                StationInfo.class,
+                station.name,
+                city.name))
+            .from(route)
+            .join(station)
+            .on(route.station.eq(station))
+            .join(city)
+            .on(station.city.eq(city))
+            .where(route.id.eq(routeId))
+            .fetchOne();
+        return Optional.ofNullable(stationInfo);
     }
 
 

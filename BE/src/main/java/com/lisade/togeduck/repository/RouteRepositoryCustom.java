@@ -2,6 +2,7 @@ package com.lisade.togeduck.repository;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import java.util.Optional;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,6 @@ public interface RouteRepositoryCustom {
     Slice<UserReservedRouteDto> findReservedRoutes(Pageable pageable, Long userId);
 
     Optional<RouteAndFestivalInfo> findRouteAndFestivalInfo(Long routeId);
+
+    Optional<StationInfo> findStationInfo(Long routeId);
 }
