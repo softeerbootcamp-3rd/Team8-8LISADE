@@ -16,6 +16,7 @@ import com.lisade.togeduck.dto.request.SeatRegistrationDto;
 import com.lisade.togeduck.dto.response.SeatDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
 import com.lisade.togeduck.entity.enums.SeatStatus;
+import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
 import com.lisade.togeduck.exception.SeatNotFoundException;
 import com.lisade.togeduck.global.exception.Error;
@@ -98,6 +99,35 @@ class SeatControllerTest {
             SeatListDto.class);
 
         assertEquals(5, response.getNumberOfSeats());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 Route가 주어질 때 좌석 조회 실패 테스트")
+    public void getSeatsOfRouteWithNonExistRouteTest() throws Exception {
+        // given
+        Long festivalId = 1L;
+        Long routeId = 1L;
+
+        doReturn(seatsResponse()).when(seatService)
+            .getList(any(Long.class));
+
+        // when & then
+        RouteNotFoundException routeNotFoundException = new RouteNotFoundException();
+        ResponseEntity<Object> response = getResponseEntity(routeNotFoundException);
+
+        when(seatService.getList(any(Long.class)))
+            .thenThrow(routeNotFoundException);
+
+        when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
+            any(WebRequest.class))).thenReturn(response);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/festivals/{festival_id}/routes/{route_id}/seats",
+                        festivalId, routeId)
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andExpect(status().isNotFound())
+            .andExpect(result -> assertThat(result.getResolvedException()).isInstanceOf(
+                RouteNotFoundException.class));
     }
 
     @Test
