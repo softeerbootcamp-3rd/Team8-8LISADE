@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.HomeArticleModel
 import com.softeer.togeduck.data.model.HomeCategoryModel
 import com.softeer.togeduck.databinding.FragmentHomeListBinding
+import com.softeer.togeduck.ui.article_detail.RouteViewModel
 import com.softeer.togeduck.utils.ItemClick
 
 
@@ -41,6 +43,7 @@ class HomeListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var categoryAdapter: HomeListCategoryChipAdapter
     private lateinit var articleAdapter: HomeListArticleAdapter
+    private val homeListViewModel: HomeListViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
@@ -57,7 +60,9 @@ class HomeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpArrayAdapter()
+
         init()
+        getArticleSize()
     }
 
     private fun setUpArrayAdapter() {
@@ -65,6 +70,7 @@ class HomeListFragment : Fragment() {
         val arrayAdapter =
             ArrayAdapter(requireContext(), R.layout.item_category_sort_list, regionArray)
         binding.listSortMenu.adapter = arrayAdapter
+
     }
 
     private fun init() {
@@ -74,6 +80,8 @@ class HomeListFragment : Fragment() {
         rvArticleList.addItemDecoration(dividerItemDecoration)
         categoryAdapter = HomeListCategoryChipAdapter(dummyData)
         articleAdapter = HomeListArticleAdapter(articleDummyData)
+        binding.vm = homeListViewModel
+
         rvCategoryList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
@@ -95,5 +103,8 @@ class HomeListFragment : Fragment() {
                 findNavController().navigate(R.id.action_homeListFragment_to_articleDetailActivity)
             }
         }
+    }
+    private fun getArticleSize(){
+        homeListViewModel.getItemSize(articleAdapter.itemCount.toString())
     }
 }

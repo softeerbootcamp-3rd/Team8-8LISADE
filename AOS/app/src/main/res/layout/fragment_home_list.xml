@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.home.main.HomeListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,46 +18,45 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategoryList"
             android:layout_width="0dp"
-            android:layout_marginTop="8dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             app:itemAnimator="@{null}"
+            app:layout_constraintBottom_toTopOf="@id/entire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/entire" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/entire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전체 3"
-
+            android:gravity="start"
+            android:text="@{` 전체 ` + vm.size}"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:gravity="start"
+            app:layout_constraintBottom_toTopOf="@id/rvArticleList"
             app:layout_constraintEnd_toStartOf="@id/listSortMenu"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvCategoryList"
-            app:layout_constraintBottom_toTopOf="@id/rvArticleList" />
+            app:layout_constraintTop_toBottomOf="@id/rvCategoryList" />
 
         <Spinner
             android:id="@+id/listSortMenu"
             android:layout_width="wrap_content"
-            android:paddingLeft="8dp"
             android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            app:layout_constraintBottom_toTopOf="@id/rvArticleList"
             app:layout_constraintStart_toEndOf="@id/entire"
-            app:layout_constraintTop_toBottomOf="@id/rvCategoryList"
-            app:layout_constraintBottom_toTopOf="@id/rvArticleList" />
+            app:layout_constraintTop_toBottomOf="@id/rvCategoryList" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvArticleList"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/listSortMenu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

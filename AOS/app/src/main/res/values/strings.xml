@@ -60,6 +60,20 @@
         <item>인기순</item>
         <item>최신순</item>
     </string-array>
+    <string-array name="article_detail_sort_list">
+        <item>인원순</item>
+        <item>최신순</item>
+    </string-array>
+    <string name="select_start_region">출발 지역 선택</string>
     <string name="entire">전체</string>
     <string name="route">노선</string>
+    <string name="seoul">서울</string>
+    <string name="gyeonggi">경기</string>
+    <string name="incheon">인천</string>
+    <string name="kangwon">강원</string>
+    <string name="daejeon">대전</string>
+    <string name="sejong">세종</string>
+    <string name="busan">부산</string>
+    <string name="make_route">노선 개설</string>
+
 </resources>

@@ -5,28 +5,45 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.PopupMenu
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
+import com.softeer.togeduck.data.model.PopularArticleModel
+import com.softeer.togeduck.data.model.RouteListModel
+import com.softeer.togeduck.databinding.FragmentHomeBinding
+import com.softeer.togeduck.databinding.FragmentRouteBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RouteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
+//data class RouteListModel(
+//    val startDate: String,
+//    val place: String,
+//    val price: String,
+//    val totalPeople: Int,
+//    val currentPeople: Int,
+//    val currentType: String,
+//)
+
+private val dummyData = listOf(
+    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
+    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
+    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
+    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
+    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
+    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
+    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
+)
 class RouteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentRouteBinding? =null
+    private val binding get() = _binding!!
+    private val routeViewModel: RouteViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -35,26 +52,35 @@ class RouteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_route, container, false)
+        _binding = FragmentRouteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RouteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RouteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpArrayAdapter()
+        init()
     }
+    private fun setUpArrayAdapter() {
+        val regionArray = resources.getStringArray(R.array.article_detail_sort_list)
+        val arrayAdapter =
+            ArrayAdapter(requireContext(), R.layout.item_category_sort_list, regionArray)
+        binding.listSortMenu.adapter = arrayAdapter
+        binding.vm = routeViewModel
+    }
+
+    private fun init() {
+        val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        binding.rvRouteList.addItemDecoration(dividerItemDecoration)
+        binding.rvRouteList.apply{
+            layoutManager = LinearLayoutManager(context)
+            adapter = RouteListAdapter(dummyData)
+        }
+    }
+
+
+//    private fun getArticleSize(){
+//        routeViewModel.getItemSize(articleAdapter.itemCount.toString())
+//    }
+
 }

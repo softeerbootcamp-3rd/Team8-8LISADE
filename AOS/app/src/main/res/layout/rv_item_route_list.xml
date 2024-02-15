@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="route"
+            type="com.softeer.togeduck.data.model.RouteListModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{route.startDate}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/startPlace"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@id/currentState"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{`모집중(`+ route.currentPeople + `/` + route.totalPeople+`)`}"
+            android:textColor="@color/navy300"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/startDate"
+            app:layout_constraintEnd_toStartOf="@id/startPlace"
+            app:layout_constraintBottom_toTopOf="@id/price"/>
+
+        <TextView
+            android:id="@+id/startPlace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{route.place}"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/currentState"
+            app:layout_constraintBottom_toTopOf="@id/price"
+            app:layout_constraintTop_toBottomOf="@id/startDate" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{route.price + `/인`}"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/startPlace" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

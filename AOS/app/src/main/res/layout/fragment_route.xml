@@ -1,14 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.article_detail.RouteFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.article_detail.RouteViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="8dp"
+        tools:context=".ui.article_detail.RouteFragment">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_contents" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideline_contents" />
+
+        <TextView
+            android:id="@+id/entire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@{`전체 ` + vm.size}"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
+            app:layout_constraintEnd_toStartOf="@id/listSortMenu"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/listSortMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
+            app:layout_constraintStart_toEndOf="@id/entire"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectStartRegion"
+            style="@style/start_region_select_box"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:backgroundTint="@color/white"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/select_start_region"
+            android:textColor="@color/black"
+            app:cornerRadius="5dp"
+            app:icon="@drawable/icon_filter"
+            app:iconTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:dividerInsetEnd="16dp"
+            app:dividerInsetStart="16dp"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@id/selectStartRegion"
+            app:layout_constraintBottom_toTopOf="@id/rvRouteList"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRouteList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/makeRouteBtn"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@id/divider"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/makeRouteBtn"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/main"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/make_route"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@id/rvRouteList"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

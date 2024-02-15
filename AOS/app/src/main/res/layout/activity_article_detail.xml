@@ -38,7 +38,7 @@
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="노선"
+            android:text="@string/route"
             android:textColor="@color/gray300"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/articleDetailButton"
