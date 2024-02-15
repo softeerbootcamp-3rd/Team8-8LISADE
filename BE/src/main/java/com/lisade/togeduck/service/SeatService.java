@@ -42,7 +42,7 @@ public class SeatService {
 
     @Transactional
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    public void register(Long routeId, SeatRegistrationDto seatRegistration) {
+    public Long register(Long routeId, SeatRegistrationDto seatRegistration) {
         Seat seat = get(routeId, seatRegistration.getNo());
         Route route = seat.getRoute();
 
@@ -59,7 +59,7 @@ public class SeatService {
             .route(route)
             .build();
 
-        userRouteRepository.save(userRoute);
+        return userRouteRepository.save(userRoute).getId();
     }
 
     public Seat get(Long routeId, Integer no) {
