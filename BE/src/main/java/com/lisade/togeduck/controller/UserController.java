@@ -63,7 +63,8 @@ public class UserController {
     }
 
     @GetMapping("/routes/{route_id}")
-    public UserReservationDetailDto getRouteInfo(@PathVariable(name = "route_id") Long routeId) {
-        return userService.getReservedRouteInfo(routeId);
+    public UserReservationDetailDto getRouteInfo(@Login User user,
+        @PathVariable(name = "route_id") Long routeId) {
+        return userService.getReservedRouteInfo(user.getId(), routeId);
     }
 }
