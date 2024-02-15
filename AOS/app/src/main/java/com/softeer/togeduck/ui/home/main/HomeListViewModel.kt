@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 class HomeListViewModel : ViewModel() {
     private var _size  = MutableLiveData("")
     val size: LiveData<String> = _size
-    fun getItemSize(itemCount:String){
+    fun setItemSize(itemCount:String){
         _size.value = itemCount
     }
 }

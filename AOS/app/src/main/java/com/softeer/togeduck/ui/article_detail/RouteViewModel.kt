@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class RouteViewModel:ViewModel() {
     private var _size  = MutableLiveData("0")
     val size: LiveData<String> = _size
-    fun getItemSize(itemCount:String){
+    fun setItemSize(itemCount:String){
         _size.value = itemCount
     }
 }

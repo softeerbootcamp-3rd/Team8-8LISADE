@@ -105,6 +105,6 @@ class HomeListFragment : Fragment() {
         }
     }
     private fun getArticleSize(){
-        homeListViewModel.getItemSize(articleAdapter.itemCount.toString())
+        homeListViewModel.setItemSize(articleAdapter.itemCount.toString())
     }
 }

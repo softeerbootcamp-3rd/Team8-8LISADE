@@ -4,7 +4,7 @@
     <item android:title="@string/gyeonggi" android:id="@+id/gyeonggi" />
     <item android:title="@string/incheon" android:id="@+id/incheon" />
     <item android:title="@string/kangwon" android:id="@+id/kangwon" />
-    <item android:title="@string/daejeon" android:id="@+id/전" />
+    <item android:title="@string/daejeon" android:id="@+id/daejeon" />
     <item android:title="@string/sejong" android:id="@+id/sejong" />
     <item android:title="@string/busan" android:id="@+id/busan" />
 </menu>
