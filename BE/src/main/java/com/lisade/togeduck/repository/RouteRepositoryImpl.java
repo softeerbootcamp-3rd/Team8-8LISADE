@@ -1,6 +1,8 @@
 package com.lisade.togeduck.repository;
 
 import static com.lisade.togeduck.entity.QBus.bus;
+import static com.lisade.togeduck.entity.QDriver.driver;
+import static com.lisade.togeduck.entity.QDriverRoute.driverRoute;
 import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QFestivalImage.festivalImage;
 import static com.lisade.togeduck.entity.QRoute.route;
@@ -89,7 +91,43 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
 
     @Override
     public Optional<UserReservedRouteDetailDto> findReservedRouteInfo(Long userId, Long routeId) {
-        return Optional.empty();
+        UserReservedRouteDetailDto userReservedRouteDetailDto = queryFactory.select(
+                Projections.constructor(
+                    UserReservedRouteDetailDto.class,
+                    festival.id,
+                    festival.title,
+                    seat.no,
+                    route.expectedTime,
+                    route.status.stringValue(),
+                    bus.numberOfSeats,
+                    getReservationSeats(),
+                    route.price,
+                    festivalImage.path,
+                    route.startedAt,
+                    route.expectedTime, //todo 도착시간으로 변경
+                    station.name,
+                    festival.location
+//                    Projections.constructor(UserReservedRouteDetailDto.DriverInfo.class, driver.id,
+//                        driver.name, driver.company, driver.phoneNumber, driverRoute.carNumber)
+                ))
+            .from(route)
+            .join(station)
+            .on(route.station.eq(station))
+            .join(festival)
+            .on(festival.eq(route.festival))
+            .join(bus)
+            .on(route.bus.eq(bus))
+            .join(festivalImage)
+            .on(festivalImage.festival.eq(festival))
+            .join(seat)
+            .on(seat.route.eq(route))
+            .join(driverRoute)
+            .on(driverRoute.route.eq(route))
+            .join(driver)
+            .on(driverRoute.driver.eq(driver))
+            .where(route.id.eq(routeId)) //todo 수정
+            .fetchOne();
+        return Optional.ofNullable(userReservedRouteDetailDto);
     }
 
     private JPQLQuery<Long> getMinFestivalImageId() {
@@ -112,8 +150,8 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 .and(seat.status.eq(SeatStatus.RESERVATION)));
     }
 
-    private JPQLQuery<Long> getReservationSeats(Long routeId) {
-        return JPAExpressions.select(seat.id.count())
+    private JPQLQuery<Integer> getReservationSeats(Long routeId) {
+        return JPAExpressions.select(seat.id.count().intValue())
             .from(seat)
             .where(seat.route.id.eq(routeId)
                 .and(seat.status.eq(SeatStatus.RESERVATION)));

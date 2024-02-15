@@ -13,18 +13,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserReservedRouteDetailDto {
 
-    private Integer festivalId;
+    private Long festivalId;
     private String title;
     private Integer seatNo;
     private LocalTime expectedDuration;
+    private String status;
     private Integer totalSeats;
     private Integer reservedSeats;
     private Integer price;
-    private Integer imagePath;
+    private String imagePath;
     private LocalDateTime startedAt;
     private LocalTime arrivedAt;
     private String stationName;
+    private String stationCity;
     private String festivalLocation;
+    private String festivalCity;
+    private DriverInfo driverInfo;
 
     @Getter
     @Builder

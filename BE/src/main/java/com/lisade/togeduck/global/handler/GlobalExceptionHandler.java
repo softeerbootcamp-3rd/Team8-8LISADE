@@ -88,7 +88,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler // controller 에서 발생한 예외중에 GeneralException 외 모든 예외 처리
     public ResponseEntity<Object> handleAllOtherException(Exception exception,
         WebRequest webRequest) {
-
+        log.error(exception.getMessage());
+        log.error("", exception);
         return makeInternalExceptionResponse(
             exception,
             INTERNAL_SERVER_ERROR,
