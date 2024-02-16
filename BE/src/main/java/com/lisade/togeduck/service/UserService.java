@@ -19,6 +19,8 @@ import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.mapper.UserMapper;
 import com.lisade.togeduck.repository.RouteRepository;
 import com.lisade.togeduck.repository.UserRepository;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -53,10 +55,6 @@ public class UserService {
             .orElseThrow(UserNotFoundException::new);
     }
 
-    public Slice<UserReservedRouteDto> getReservedRouteList(Pageable pageable, Long userId) {
-        return routeRepository.findReservedRoutes(pageable, userId);
-    }
-
     public ResponseEntity<Object> checkUserId(String userId) {
         validateByUserId(userId);
 
@@ -74,14 +72,17 @@ public class UserService {
             routeId).orElseThrow(RouteNotFoundException::new);
         StationInfo stationInfo = routeRepository.findStationInfo(routeId)
             .orElseThrow(RouteNotFoundException::new);
-        DriverInfo driverInfo = routeRepository.findDriverInfo(routeId)
+        SeatInfo seatInfo = routeRepository.findSeatInfo(routeId, userId)
             .orElseThrow(RouteNotFoundException::new);
         BusInfo busInfo = routeRepository.findBusInfo(routeId)
             .orElseThrow(RouteNotFoundException::new);
-        SeatInfo seatInfo = routeRepository.findSeatInfo(routeId, userId)
+        DriverInfo driverInfo = routeRepository.findDriverInfo(routeId)
             .orElseThrow(RouteNotFoundException::new);
-        System.out.println("seatInfo = " + seatInfo);
-        return Optional.empty();
+        LocalTime arrivedAt = getArrivedAt(routeAndFestivalInfo.getStartedAt(),
+            routeAndFestivalInfo.getExpectedDuration());
+        return Optional.ofNullable(
+            UserMapper.toUserReservedRouteDetailDto(routeAndFestivalInfo, stationInfo, seatInfo,
+                busInfo, driverInfo, arrivedAt));
     }
 
     private void validateByUserId(String userId) {
@@ -100,5 +101,10 @@ public class UserService {
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException();
         }
+    }
+
+    private LocalTime getArrivedAt(LocalDateTime startedAt, LocalTime expectedAt) {
+        return startedAt.toLocalTime().plusHours(expectedAt.getHour())
+            .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
     }
 }
