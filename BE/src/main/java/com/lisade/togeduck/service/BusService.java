@@ -20,6 +20,11 @@ public class BusService {
             .orElseThrow(BusNotFoundException::new);
     }
 
+    public Bus get(Long busId, Integer distance) {
+        return busRepository.findBusByIdAndDistanceWithPriceTable(busId, distance)
+            .orElseThrow(BusNotFoundException::new);
+    }
+
     public List<BusInfo> getBusInfo(Integer distance) {
         return busRepository.findBusInfoByDistance(distance);
     }
