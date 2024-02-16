@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.entity.User;
+import com.lisade.togeduck.exception.UserNotFoundException;
 import com.lisade.togeduck.mapper.UserMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
