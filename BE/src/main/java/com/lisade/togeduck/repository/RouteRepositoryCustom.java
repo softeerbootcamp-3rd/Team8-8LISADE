@@ -23,5 +23,5 @@ public interface RouteRepositoryCustom {
 
     Optional<DriverInfo> findDriverInfo(Long routeId);
 
-    Optional<BusInfo> findBusInfo(Long routeId, Long userId);
+    Optional<BusInfo> findBusInfo(Long routeId);
 }

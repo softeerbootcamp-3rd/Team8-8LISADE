@@ -75,7 +75,7 @@ public class UserService {
             .orElseThrow(RouteNotFoundException::new);
         DriverInfo driverInfo = routeRepository.findDriverInfo(routeId)
             .orElseThrow(RouteNotFoundException::new);
-        BusInfo busInfo = routeRepository.findBusInfo(routeId, userId)
+        BusInfo busInfo = routeRepository.findBusInfo(routeId)
             .orElseThrow(RouteNotFoundException::new);
         System.out.println("busInfo = " + busInfo);
         return Optional.empty();

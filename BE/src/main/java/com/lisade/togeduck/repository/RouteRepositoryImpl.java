@@ -153,16 +153,14 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     @Override
-    public Optional<BusInfo> findBusInfo(Long routeId, Long userId) {
+    public Optional<BusInfo> findBusInfo(Long routeId) {
         BusInfo busInfo = queryFactory.select(Projections.constructor(
                 BusInfo.class,
                 bus.numberOfSeats))
             .from(route)
             .join(bus)
             .on(route.bus.eq(bus))
-            .join(userRoute)
-            .on(userRoute.route.eq(route))
-            .where(route.id.eq(routeId).and(userRoute.user.id.eq(userId)))
+            .where(route.id.eq(routeId))
             .fetchOne();
         return Optional.ofNullable(busInfo);
     }
