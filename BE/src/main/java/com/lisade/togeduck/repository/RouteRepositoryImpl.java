@@ -13,6 +13,7 @@ import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
@@ -143,14 +144,27 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 driver.company,
                 driver.phoneNumber,
                 driverRoute.carNumber))
-            .from(route)
-            .join(driverRoute)
-            .on(driverRoute.route.eq(route))
+            .from(driverRoute)
             .join(driver)
             .on(driverRoute.driver.eq(driver))
-            .where(route.id.eq(routeId))
+            .where(driverRoute.route.id.eq(routeId).and(route.id.eq(routeId)))
             .fetchOne();
         return Optional.ofNullable(driverInfo);
+    }
+
+    @Override
+    public Optional<BusInfo> findBusInfo(Long routeId, Long userId) {
+        BusInfo busInfo = queryFactory.select(Projections.constructor(
+                BusInfo.class,
+                bus.numberOfSeats))
+            .from(route)
+            .join(bus)
+            .on(route.bus.eq(bus))
+            .join(userRoute)
+            .on(userRoute.route.eq(route))
+            .where(route.id.eq(routeId).and(userRoute.user.id.eq(userId)))
+            .fetchOne();
+        return Optional.ofNullable(busInfo);
     }
 
 
@@ -161,7 +175,8 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     private JPQLQuery<Integer> getTotalSeats(Long routeId) {
-        return JPAExpressions.select(bus.numberOfSeats).from(route)
+        return JPAExpressions.select(bus.numberOfSeats)
+            .from(route)
             .where(route.id.eq(routeId))
             .join(bus)
             .on(route.bus.eq(bus));

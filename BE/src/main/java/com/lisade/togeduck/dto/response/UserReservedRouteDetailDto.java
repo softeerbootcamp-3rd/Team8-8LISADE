@@ -61,6 +61,15 @@ public class UserReservedRouteDetailDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class BusInfo {
+
+        private Integer totalSeats;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class DriverInfo {
 
         private Long id;

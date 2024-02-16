@@ -1,6 +1,7 @@
 package com.lisade.togeduck.repository;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
@@ -21,4 +22,6 @@ public interface RouteRepositoryCustom {
     Optional<StationInfo> findStationInfo(Long routeId);
 
     Optional<DriverInfo> findDriverInfo(Long routeId);
+
+    Optional<BusInfo> findBusInfo(Long routeId, Long userId);
 }
