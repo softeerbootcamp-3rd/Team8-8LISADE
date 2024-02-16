@@ -10,27 +10,34 @@ import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.entity.enums.RouteStatus;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class RouteMapper {
 
     public static Route toRoute(
         Festival festival,
         Bus bus,
         Station station,
-        Integer distance,
+        com.lisade.togeduck.dto.request.RouteRegistrationDto routeRegistrationDto,
         Integer price
     ) {
-        // TODO expectedTime, startAt 설정하기
+        int expectedHour = routeRegistrationDto.getExpectedTime() / 60 / 60;
+        int expectedMinuet = routeRegistrationDto.getExpectedTime() % (60 * 60) / 60;
+
+        LocalTime expectedTime = LocalTime.of(expectedHour, expectedMinuet);
+        LocalDateTime startedAt = festival.getStartedAt().minusHours(expectedHour + 1)
+            .minusMinutes(expectedMinuet);
 
         return Route.builder()
             .bus(bus)
             .festival(festival)
             .price(price)
-            .distance(distance)
+            .distance(routeRegistrationDto.getDistance())
             .station(station)
             .status(RouteStatus.PROGRESS)
-            .expectedTime(LocalTime.now())
-            .startedAt(LocalDateTime.now())
+            .expectedTime(expectedTime)
+            .startedAt(startedAt)
             .build();
     }
 
