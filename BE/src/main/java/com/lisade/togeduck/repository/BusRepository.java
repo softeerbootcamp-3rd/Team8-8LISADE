@@ -11,4 +11,7 @@ public interface BusRepository extends JpaRepository<Bus, Long>, BusCustomReposi
 
     @Query("select b from Bus b join fetch b.priceTables where b.id =:busId")
     Optional<Bus> findBusByIdWithPriceTable(Long busId);
+
+    @Query("select b from Bus b join fetch b.priceTables as pt where b.id =:busId and pt.distance < :distance order by pt.distance desc limit 1")
+    Optional<Bus> findBusByIdAndDistanceWithPriceTable(Long busId, Integer distance);
 }
