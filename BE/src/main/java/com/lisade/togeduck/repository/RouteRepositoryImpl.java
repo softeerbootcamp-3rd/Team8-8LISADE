@@ -16,6 +16,7 @@ import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.enums.SeatStatus;
@@ -163,6 +164,22 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .where(route.id.eq(routeId))
             .fetchOne();
         return Optional.ofNullable(busInfo);
+    }
+
+    @Override
+    public Optional<SeatInfo> findSeatInfo(Long routeId, Long userId) {
+        SeatInfo seatInfo = queryFactory.select(Projections.constructor(
+                SeatInfo.class,
+                seat.no,
+                getReservationSeats(routeId)))
+            .from(seat)
+            .where(seat.id.eq(getSeatId(routeId, userId))).fetchOne();
+        return Optional.ofNullable(seatInfo);
+    }
+
+    private JPQLQuery<Long> getSeatId(Long routeId, Long userId) {
+        return JPAExpressions.select(userRoute.seat.id).from(userRoute)
+            .where(userRoute.user.id.eq(userId).and(userRoute.route.id.eq(routeId)));
     }
 
 

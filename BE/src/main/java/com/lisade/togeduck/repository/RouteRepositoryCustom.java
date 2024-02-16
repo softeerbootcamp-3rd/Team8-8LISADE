@@ -4,6 +4,7 @@ import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import java.util.Optional;
@@ -24,4 +25,8 @@ public interface RouteRepositoryCustom {
     Optional<DriverInfo> findDriverInfo(Long routeId);
 
     Optional<BusInfo> findBusInfo(Long routeId);
+
+    Optional<SeatInfo> findSeatInfo(Long routeId, Long userId);
+
+
 }

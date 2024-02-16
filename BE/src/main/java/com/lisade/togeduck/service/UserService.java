@@ -6,6 +6,7 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
@@ -77,7 +78,9 @@ public class UserService {
             .orElseThrow(RouteNotFoundException::new);
         BusInfo busInfo = routeRepository.findBusInfo(routeId)
             .orElseThrow(RouteNotFoundException::new);
-        System.out.println("busInfo = " + busInfo);
+        SeatInfo seatInfo = routeRepository.findSeatInfo(routeId, userId)
+            .orElseThrow(RouteNotFoundException::new);
+        System.out.println("seatInfo = " + seatInfo);
         return Optional.empty();
     }
 

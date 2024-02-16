@@ -61,6 +61,16 @@ public class UserReservedRouteDetailDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class SeatInfo {
+
+        private Integer seatNo;
+        private Integer reservedSeats;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class BusInfo {
 
         private Integer totalSeats;
