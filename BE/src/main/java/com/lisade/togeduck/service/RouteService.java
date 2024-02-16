@@ -16,7 +16,6 @@ import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.RouteRepository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,22 +42,14 @@ public class RouteService {
 
         Festival festival = festivalService.get(festivalId);
         Station station = locationService.getStation(routeRegistration.getStationId());
-        Bus bus = busService.get(routeRegistration.getBusId());
+        Bus bus = busService.get(routeRegistration.getBusId(), routeRegistration.getDistance());
+        PriceTable priceTable = bus.getPriceTables().get(0);
 
-        List<PriceTable> priceTables = bus.getPriceTables();
-
-        int price = 0;
-        int maxDistance = 0;
-
-        for (PriceTable priceTable : priceTables) {
-            if (priceTable.getDistance() < routeRegistration.getDistance()
-                && priceTable.getDistance() > maxDistance) {
-                price = priceTable.getPrice() / bus.getNumberOfSeats() / 100 * 100;
-            }
-        }
+        Integer numberOfSeats = bus.getNumberOfSeats();
+        Integer price = priceTable.getPrice() / numberOfSeats / 100 * 100;
 
         Route route = routeRepository.save(RouteMapper.toRoute(festival, bus, station,
-            routeRegistration.getDistance(), price));
+            routeRegistration, price));
 
         seatService.saveAll(SeatMapper.toSeats(route, bus.getNumberOfSeats()));
 
