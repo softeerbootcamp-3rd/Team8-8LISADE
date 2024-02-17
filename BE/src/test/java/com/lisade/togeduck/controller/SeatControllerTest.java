@@ -59,7 +59,6 @@ import org.springframework.web.context.request.WebRequest;
 @MockBean(JpaMetamodelMappingContext.class)
 class SeatControllerTest {
 
-    private SeatController seatController;
     @MockBean
     private SeatService seatService;
     @Mock
@@ -69,7 +68,7 @@ class SeatControllerTest {
 
     @BeforeEach
     void setUp() {
-        seatController = new SeatController(seatService);
+        SeatController seatController = new SeatController(seatService);
         this.mockMvc = MockMvcBuilders.standaloneSetup(seatController)
             .setControllerAdvice(globalExceptionHandler)
             .build();
@@ -83,7 +82,7 @@ class SeatControllerTest {
         Long routeId = 1L;
 
         doReturn(seatsResponse()).when(seatService)
-            .getList(any(Long.class), any(Long.class));
+            .getList(any(Long.class));
 
         // when
         ResultActions resultActions = mockMvc.perform(
@@ -110,20 +109,20 @@ class SeatControllerTest {
         Long routeId = 1L;
 
         doReturn(seatsResponse()).when(seatService)
-            .getList(any(Long.class), any(Long.class));
+            .getList(any(Long.class));
 
         // when & then
         RouteNotFoundException routeNotFoundException = new RouteNotFoundException();
         ResponseEntity<Object> response = getResponseEntity(routeNotFoundException);
 
-        when(seatService.getList(any(Long.class), any(Long.class)))
+        when(seatService.getList(any(Long.class)))
             .thenThrow(routeNotFoundException);
 
         when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
             any(WebRequest.class))).thenReturn(response);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/festivals/{festival_id}/routes/{route_id}/seats",
+                MockMvcRequestBuilders.get("/routes/{route_id}/seats",
                         festivalId, routeId)
                     .contentType(MediaType.APPLICATION_JSON)
             ).andExpect(status().isNotFound())
@@ -141,7 +140,7 @@ class SeatControllerTest {
             .no(1)
             .build();
 
-        when(seatService.register(any(User.class), any(Long.class), any(Long.class),
+        when(seatService.register(any(User.class), any(Long.class),
             any(SeatRegistrationDto.class)))
             .thenReturn(1L);
 
@@ -154,7 +153,7 @@ class SeatControllerTest {
         );
 
         // then
-        MvcResult mvcResult = resultActions.andExpect(status().isOk())
+        resultActions.andExpect(status().isOk())
             .andReturn();
     }
 
@@ -171,7 +170,7 @@ class SeatControllerTest {
         SeatNotFoundException seatNotFoundException = new SeatNotFoundException();
         ResponseEntity<Object> response = getResponseEntity(seatNotFoundException);
 
-        when(seatService.register(any(User.class), any(Long.class), any(Long.class),
+        when(seatService.register(any(User.class), any(Long.class),
             any(SeatRegistrationDto.class)))
             .thenThrow(seatNotFoundException);
 
@@ -180,7 +179,7 @@ class SeatControllerTest {
 
         // when & then
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/festivals/{festival_id}/routes/{route_id}/seats",
+                MockMvcRequestBuilders.post("/routes/{route_id}/seats",
                         festivalId, routeId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(request))
@@ -191,7 +190,7 @@ class SeatControllerTest {
                 SeatNotFoundException.class));
 
         verify(globalExceptionHandler, times(1)).handleGeneralException(any(), any());
-        verify(seatService, times(1)).register(any(), any(), any(), any());
+        verify(seatService, times(1)).register(any(), any(), any());
     }
 
 
@@ -208,7 +207,7 @@ class SeatControllerTest {
         SeatAlreadyRegisterException seatAlreadyRegisterException = new SeatAlreadyRegisterException();
         ResponseEntity<Object> response = getResponseEntity(seatAlreadyRegisterException);
 
-        when(seatService.register(any(User.class), any(Long.class), any(Long.class),
+        when(seatService.register(any(User.class), any(Long.class),
             any(SeatRegistrationDto.class)))
             .thenThrow(seatAlreadyRegisterException);
 
@@ -217,7 +216,7 @@ class SeatControllerTest {
 
         // when & then
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/festivals/{festival_id}/routes/{route_id}/seats",
+                MockMvcRequestBuilders.post("/routes/{route_id}/seats",
                         festivalId, routeId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(request))
@@ -233,7 +232,7 @@ class SeatControllerTest {
             seats.add(SeatDto.builder()
                 .id((long) i)
                 .seatNo(i + 1)
-                .status(SeatStatus.AVAILABLE.toString())
+                .status(SeatStatus.AVAILABLE)
                 .build());
         }
 
