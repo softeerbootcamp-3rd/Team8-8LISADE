@@ -82,7 +82,7 @@ public class SeatService {
         }
     }
 
-    private void validateSeats(List<Seat> seats) {
+    private void validateSeats(List<SeatDto> seats) {
         if (seats.isEmpty()) {
             throw new RouteNotFoundException();
         }
