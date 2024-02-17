@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
 import com.lisade.togeduck.dto.response.SeatDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
@@ -82,7 +83,7 @@ class SeatControllerTest {
         Long routeId = 1L;
 
         doReturn(seatsResponse()).when(seatService)
-            .getList(any(Long.class));
+            .getList(any(Long.class), any(Long.class));
 
         // when
         ResultActions resultActions = mockMvc.perform(
@@ -109,13 +110,13 @@ class SeatControllerTest {
         Long routeId = 1L;
 
         doReturn(seatsResponse()).when(seatService)
-            .getList(any(Long.class));
+            .getList(any(Long.class), any(Long.class));
 
         // when & then
         RouteNotFoundException routeNotFoundException = new RouteNotFoundException();
         ResponseEntity<Object> response = getResponseEntity(routeNotFoundException);
 
-        when(seatService.getList(any(Long.class)))
+        when(seatService.getList(any(Long.class), any(Long.class)))
             .thenThrow(routeNotFoundException);
 
         when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
@@ -140,7 +141,8 @@ class SeatControllerTest {
             .no(1)
             .build();
 
-        when(seatService.register(any(Long.class), any(SeatRegistrationDto.class)))
+        when(seatService.register(any(User.class), any(Long.class), any(Long.class),
+            any(SeatRegistrationDto.class)))
             .thenReturn(1L);
 
         // when
@@ -169,7 +171,8 @@ class SeatControllerTest {
         SeatNotFoundException seatNotFoundException = new SeatNotFoundException();
         ResponseEntity<Object> response = getResponseEntity(seatNotFoundException);
 
-        when(seatService.register(any(Long.class), any(SeatRegistrationDto.class)))
+        when(seatService.register(any(User.class), any(Long.class), any(Long.class),
+            any(SeatRegistrationDto.class)))
             .thenThrow(seatNotFoundException);
 
         when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
@@ -188,7 +191,7 @@ class SeatControllerTest {
                 SeatNotFoundException.class));
 
         verify(globalExceptionHandler, times(1)).handleGeneralException(any(), any());
-        verify(seatService, times(1)).register(any(), any());
+        verify(seatService, times(1)).register(any(), any(), any(), any());
     }
 
 
@@ -205,7 +208,8 @@ class SeatControllerTest {
         SeatAlreadyRegisterException seatAlreadyRegisterException = new SeatAlreadyRegisterException();
         ResponseEntity<Object> response = getResponseEntity(seatAlreadyRegisterException);
 
-        when(seatService.register(any(Long.class), any(SeatRegistrationDto.class)))
+        when(seatService.register(any(User.class), any(Long.class), any(Long.class),
+            any(SeatRegistrationDto.class)))
             .thenThrow(seatAlreadyRegisterException);
 
         when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
