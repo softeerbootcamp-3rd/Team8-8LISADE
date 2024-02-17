@@ -51,7 +51,7 @@ class RouteControllerTest {
             .arrivalAt(startedAt.toLocalTime().plusHours(expectedAt.getHour())
                 .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond()))
             .totalSeats(100)
-            .reservedSeats(20L)
+            .reservedSeats(20)
             .cost(50)
             .build();
 
