@@ -86,7 +86,7 @@ class SeatControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(
-            MockMvcRequestBuilders.get("/festivals/{festival_id}/routes/{route_id}/seats",
+            MockMvcRequestBuilders.get("/routes/{route_id}/seats",
                 festivalId, routeId)
         );
 
