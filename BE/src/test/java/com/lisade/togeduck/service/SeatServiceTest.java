@@ -10,6 +10,8 @@ import static org.mockito.Mockito.verify;
 
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
+import com.lisade.togeduck.entity.Festival;
+import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.UserRoute;
@@ -76,9 +78,9 @@ class SeatServiceTest {
     @DisplayName("좌석 등록 성공 테스트")
     void registerSeatTest() {
         // given
+        Integer no = 1;
         Long festivalId = 1L;
         Long routeId = 1L;
-        Integer no = 1;
 
         SeatRegistrationDto request = SeatRegistrationDto.builder()
             .no(no)
@@ -88,16 +90,11 @@ class SeatServiceTest {
             .userId("userId")
             .build();
 
-        Seat seat = Seat.builder()
-            .no(no)
-            .status(SeatStatus.AVAILABLE)
-            .build();
-
         UserRoute userRoute = UserRoute.builder()
             .id(1L)
             .build();
 
-        doReturn(Optional.of(seat)).when(seatRepository)
+        doReturn(Optional.of(seat())).when(seatRepository)
             .findByRouteIdAndNo(routeId, no);
 
         doReturn(userRoute).when(userRouteRepository)
@@ -168,6 +165,26 @@ class SeatServiceTest {
         });
     }
 
+    private Seat seat() {
+        Integer no = 1;
+
+        return Seat.builder()
+            .no(no)
+            .status(SeatStatus.AVAILABLE)
+            .route(route())
+            .build();
+    }
+
+    private Route route() {
+        Festival festival = Festival.builder()
+            .id(1L)
+            .build();
+
+        return Route.builder()
+            .festival(festival)
+            .build();
+    }
+
     private List<Seat> seatsResponse() {
         List<Seat> seats = new ArrayList<>();
 
@@ -176,6 +193,7 @@ class SeatServiceTest {
                 .id((long) i)
                 .no(i + 1)
                 .status(SeatStatus.AVAILABLE)
+                .route(route())
                 .build());
         }
 
