@@ -23,11 +23,11 @@ public class RouteMapper {
         Integer price
     ) {
         int expectedHour = routeRegistrationDto.getExpectedTime() / 60 / 60;
-        int expectedMinuet = routeRegistrationDto.getExpectedTime() % (60 * 60) / 60;
+        int expectedMinute = routeRegistrationDto.getExpectedTime() % (60 * 60) / 60;
 
-        LocalTime expectedTime = LocalTime.of(expectedHour, expectedMinuet);
+        LocalTime expectedTime = LocalTime.of(expectedHour, expectedMinute);
         LocalDateTime startedAt = festival.getStartedAt().minusHours(expectedHour + 1)
-            .minusMinutes(expectedMinuet);
+            .minusMinutes(expectedMinute);
 
         return Route.builder()
             .bus(bus)
