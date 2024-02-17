@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteRegistrationDto {
+public class RouteRegistrationResponse {
 
     private Long routeId;
     private Long festivalId;

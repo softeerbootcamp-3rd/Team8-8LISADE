@@ -1,8 +1,9 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.dto.request.RouteRegistrationDto;
+import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
+import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.PriceTable;
@@ -34,8 +35,8 @@ public class RouteService {
     private final RouteRepository routeRepository;
 
     @Transactional
-    public com.lisade.togeduck.dto.response.RouteRegistrationDto save(Long festivalId,
-        RouteRegistrationDto routeRegistration) {
+    public RouteRegistrationResponse save(Long festivalId,
+        RouteRegistrationRequest routeRegistration) {
         if (exists(festivalId, routeRegistration.getStationId())) {
             throw new RouteAlreadyExistsException();
         }

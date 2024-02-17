@@ -1,7 +1,8 @@
 package com.lisade.togeduck.controller;
 
-import com.lisade.togeduck.dto.request.RouteRegistrationDto;
+import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
+import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
 import com.lisade.togeduck.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,9 @@ public class RouteController {
     private final RouteService routeService;
 
     @PostMapping("/routes")
-    public com.lisade.togeduck.dto.response.RouteRegistrationDto createRoute(
+    public RouteRegistrationResponse createRoute(
         @PathVariable("festival_id") Long festivalId, @RequestBody
-    RouteRegistrationDto routeRegistration) {
+    RouteRegistrationRequest routeRegistration) {
         return routeService.save(festivalId, routeRegistration);
     }
 

@@ -1,8 +1,9 @@
 package com.lisade.togeduck.mapper;
 
+import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
-import com.lisade.togeduck.dto.response.RouteRegistrationDto;
+import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Route;
@@ -19,11 +20,11 @@ public class RouteMapper {
         Festival festival,
         Bus bus,
         Station station,
-        com.lisade.togeduck.dto.request.RouteRegistrationDto routeRegistrationDto,
+        RouteRegistrationRequest routeRegistrationRequest,
         Integer price
     ) {
-        int expectedHour = routeRegistrationDto.getExpectedTime() / 60 / 60;
-        int expectedMinute = routeRegistrationDto.getExpectedTime() % (60 * 60) / 60;
+        int expectedHour = routeRegistrationRequest.getExpectedTime() / 60 / 60;
+        int expectedMinute = routeRegistrationRequest.getExpectedTime() % (60 * 60) / 60;
 
         LocalTime expectedTime = LocalTime.of(expectedHour, expectedMinute);
         LocalDateTime startedAt = festival.getStartedAt().minusHours(expectedHour + 1)
@@ -33,7 +34,7 @@ public class RouteMapper {
             .bus(bus)
             .festival(festival)
             .price(price)
-            .distance(routeRegistrationDto.getDistance())
+            .distance(routeRegistrationRequest.getDistance())
             .station(station)
             .status(RouteStatus.PROGRESS)
             .expectedTime(expectedTime)
@@ -41,8 +42,8 @@ public class RouteMapper {
             .build();
     }
 
-    public static RouteRegistrationDto toRouteRegistrationDto(Route route) {
-        return RouteRegistrationDto.builder()
+    public static RouteRegistrationResponse toRouteRegistrationDto(Route route) {
+        return RouteRegistrationResponse.builder()
             .routeId(route.getId())
             .festivalId(route.getFestival().getId())
             .build();

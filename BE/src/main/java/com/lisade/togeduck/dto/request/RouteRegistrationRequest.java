@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteRegistrationDto {
+public class RouteRegistrationRequest {
 
     private Long stationId;
     private Long busId;
