@@ -29,6 +29,8 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation('org.springframework.boot:spring-boot-starter-websocket') // stomp 의존성 추가
+    implementation 'org.webjars:sockjs-client:1.5.1'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
