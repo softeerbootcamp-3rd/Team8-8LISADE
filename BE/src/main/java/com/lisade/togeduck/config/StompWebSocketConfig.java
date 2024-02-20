@@ -20,7 +20,7 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app");
+        registry.setApplicationDestinationPrefixes("/pub");
         registry.enableSimpleBroker("/queue", "/topic"); // 스프링 내장 브로커 사용. client에게 메시지 보낼때
     }
 
