@@ -30,6 +30,9 @@ public class ChatRoom extends BaseEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "number_of_members", nullable = false)
+    private Integer numberOfMembers;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;

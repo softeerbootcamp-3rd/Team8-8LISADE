@@ -1,6 +1,7 @@
 package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.annotation.Login;
+import com.lisade.togeduck.dto.response.ChatRoomListResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping("/rooms")
-    public void getList(@Login User user,
+    public ChatRoomListResponse getList(@Login User user,
         @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable) {
         return chatRoomService.get(user.getId());
     }

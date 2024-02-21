@@ -1,5 +1,6 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.dto.response.ChatRoomListResponse;
 import com.lisade.togeduck.entity.ChatRoom;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.User;
@@ -36,6 +37,10 @@ public class ChatRoomService {
             .chatRoom(chatRoom)
             .build();
         userChatRoomRepository.save(userChatRoom);
+    }
+
+    public ChatRoomListResponse get(Long userId) {
+        return null;
     }
 
 }
