@@ -1,8 +1,10 @@
 package com.lisade.togeduck.controller;
 
+import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.service.ChatRoomService;
 import com.lisade.togeduck.service.RouteService;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +25,13 @@ public class RouteController {
 
 
     @PostMapping("/routes")
-    public RouteRegistrationResponse createRoute(@PathVariable("festival_id") Long festivalId,
+    public RouteRegistrationResponse createRoute(@Login User user,
+        @PathVariable("festival_id") Long festivalId,
         @RequestBody
         RouteRegistrationRequest routeRegistration) {
         RouteRegistrationResponse registrationResponse = routeService.save(festivalId,
             routeRegistration);
-        chatRoomService.create(registrationResponse.getRouteId(), festivalId); // 채팅방 생성
+        chatRoomService.create(user, registrationResponse.getRouteId(), festivalId); // 채팅방 생성
 
         return registrationResponse;
     }
