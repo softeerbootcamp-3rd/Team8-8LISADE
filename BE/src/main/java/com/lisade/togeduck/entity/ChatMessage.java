@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
-@Document(collection = "chatMessage")
+@Document
 @NoArgsConstructor
 public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    private String userName;
+    private String nickname;
     private String message;
     private int roomNumber;
     private LocalDateTime messageTime;

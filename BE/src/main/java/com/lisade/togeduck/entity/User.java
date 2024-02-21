@@ -45,7 +45,7 @@ public class User extends BaseEntity {
     private AuthorityType authority;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<ChatRoom> chatRooms;
+    private List<UserChatRoom> UserChatRooms;
 
     @Builder
     public User(Long id, String userId, String password, String nickname, String email,
