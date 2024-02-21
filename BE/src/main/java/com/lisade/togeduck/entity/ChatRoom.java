@@ -29,9 +29,9 @@ public class ChatRoom extends BaseEntity {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "route_id", nullable = false)
-    private Route route;
+    @JoinColumn(name = "festival_id", nullable = false)
+    private Festival festival;
 
-    @Column(name = "room_number", nullable = false)
-    private Integer roomNumber;
+    @Column(name = "room_name", nullable = false)
+    private String roomName;
 }
