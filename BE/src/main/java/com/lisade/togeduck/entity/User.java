@@ -1,7 +1,6 @@
 package com.lisade.togeduck.entity;
 
 import com.lisade.togeduck.entity.enums.AuthorityType;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -44,7 +43,7 @@ public class User extends BaseEntity {
     @Column(name = "authority", nullable = false)
     private AuthorityType authority;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<UserChatRoom> UserChatRooms;
 
     @Builder

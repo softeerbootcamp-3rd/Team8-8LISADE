@@ -3,6 +3,7 @@ package com.lisade.togeduck.controller;
 import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
+import com.lisade.togeduck.service.ChatRoomService;
 import com.lisade.togeduck.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class RouteController {
 
     private final RouteService routeService;
+    private final ChatRoomService chatRoomService;
+
 
     @PostMapping("/routes")
-    public RouteRegistrationResponse createRoute(
-        @PathVariable("festival_id") Long festivalId, @RequestBody
-    RouteRegistrationRequest routeRegistration) {
-        return routeService.save(festivalId, routeRegistration);
+    public RouteRegistrationResponse createRoute(@PathVariable("festival_id") Long festivalId,
+        @RequestBody
+        RouteRegistrationRequest routeRegistration) {
+        RouteRegistrationResponse registrationResponse = routeService.save(festivalId,
+            routeRegistration);
+        chatRoomService.create(registrationResponse.getRouteId(), festivalId); // 채팅방 생성
+
+        return registrationResponse;
     }
 
     @GetMapping("/routes/{route_id}")
