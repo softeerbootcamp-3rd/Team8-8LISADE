@@ -37,4 +37,5 @@ public class ChatRoomService {
             .build();
         userChatRoomRepository.save(userChatRoom);
     }
+
 }
