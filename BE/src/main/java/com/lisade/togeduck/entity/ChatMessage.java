@@ -2,7 +2,6 @@ package com.lisade.togeduck.entity;
 
 import com.lisade.togeduck.entity.enums.MessageAction;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +22,5 @@ public class ChatMessage {
     private String sender;
     private String message;
     private MessageAction action;
-    private LocalDateTime createdAt;
-
+    private String createdAt;
 }
