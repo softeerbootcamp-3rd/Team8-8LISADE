@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
 @Setter
-@RedisHash("fcm_token")
+@RedisHash("chat_room")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatRoomSessionCacheValue {
 
