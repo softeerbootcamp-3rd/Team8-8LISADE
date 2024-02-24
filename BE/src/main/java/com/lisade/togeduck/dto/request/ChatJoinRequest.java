@@ -13,4 +13,6 @@ public class ChatJoinRequest {
 
     private Long roomId;
     private String createdAt;
+    private String sender;
+    private String uuid;
 }

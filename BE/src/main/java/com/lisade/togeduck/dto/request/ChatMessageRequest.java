@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Builder
@@ -12,8 +13,10 @@ import lombok.NoArgsConstructor;
 public class ChatMessageRequest {
 
     private Long roomId;
+    @Setter
     private String message;
     private String action;
     private String createdAt;
     private String uuid;
+    private String sender;
 }
