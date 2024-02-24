@@ -48,8 +48,8 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestBody @Valid LoginRequest loginRequest,
         HttpServletRequest request) {
-        User loginUser = userService.login(loginRequest);
         HttpSession session = request.getSession();
+        User loginUser = userService.login(loginRequest, session.getId());
         session.setAttribute(LOGIN_USER.getSessionName(), loginUser);
         return loginUser.getUserId();
     }
