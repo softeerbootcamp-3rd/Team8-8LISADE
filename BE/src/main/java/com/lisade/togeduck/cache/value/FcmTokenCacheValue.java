@@ -18,6 +18,7 @@ public class FcmTokenCacheValue {
     private String id;
     @Indexed
     private String nickname;
+    @Indexed
     private String fcmToken;
 
     private FcmTokenCacheValue(String nickname, String fcmToken) {
