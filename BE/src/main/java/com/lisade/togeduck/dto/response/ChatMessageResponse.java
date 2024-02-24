@@ -16,4 +16,5 @@ public class ChatMessageResponse {
     private String message;
     private String action;
     private String createdAt;
+    private String uuid;
 }

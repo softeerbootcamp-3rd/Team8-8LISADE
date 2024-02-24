@@ -15,4 +15,5 @@ public class ChatMessageRequest {
     private String message;
     private String action;
     private String createdAt;
+    private String uuid;
 }
