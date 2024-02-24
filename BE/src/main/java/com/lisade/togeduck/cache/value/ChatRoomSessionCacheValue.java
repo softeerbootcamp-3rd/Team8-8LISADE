@@ -1,4 +1,4 @@
-package com.lisade.togeduck.cache;
+package com.lisade.togeduck.cache.value;
 
 import java.util.ArrayList;
 import java.util.List;

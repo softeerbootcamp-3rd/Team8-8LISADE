@@ -1,4 +1,4 @@
-package com.lisade.togeduck.cache;
+package com.lisade.togeduck.cache.value;
 
 import lombok.AccessLevel;
 import lombok.Getter;

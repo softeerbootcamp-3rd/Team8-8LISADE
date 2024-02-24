@@ -4,7 +4,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import com.lisade.togeduck.cache.FcmTokenCacheService;
+import com.lisade.togeduck.cache.service.FcmTokenCacheService;
 import com.lisade.togeduck.dto.request.FcmTokenRequest;
 import com.lisade.togeduck.entity.User;
 import lombok.RequiredArgsConstructor;

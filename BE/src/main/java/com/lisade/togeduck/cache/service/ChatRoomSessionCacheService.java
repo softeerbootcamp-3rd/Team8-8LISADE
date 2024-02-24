@@ -1,5 +1,7 @@
-package com.lisade.togeduck.cache;
+package com.lisade.togeduck.cache.service;
 
+import com.lisade.togeduck.cache.repository.ChatRoomSessionCacheRepository;
+import com.lisade.togeduck.cache.value.ChatRoomSessionCacheValue;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
