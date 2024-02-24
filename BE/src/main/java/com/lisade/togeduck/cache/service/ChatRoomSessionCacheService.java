@@ -20,26 +20,26 @@ public class ChatRoomSessionCacheService {
         chatRoomSessionCacheRepository.save(chatRoomSessionCacheValue);
     }
 
-    public void addSession(String roomId, String fcmToken) {
+    public void addSession(String roomId, String nickname) {
         Optional<ChatRoomSessionCacheValue> chatRoomSessionCacheValue = get(roomId);
 
         if (chatRoomSessionCacheValue.isPresent()) {
-            chatRoomSessionCacheValue.get().addFcmToken(fcmToken);
+            chatRoomSessionCacheValue.get().addNickname(nickname);
             save(chatRoomSessionCacheValue.get());
         } else {
             ChatRoomSessionCacheValue newChatRoomSessionCacheValue = ChatRoomSessionCacheValue.of(
                 roomId);
-            newChatRoomSessionCacheValue.addFcmToken(fcmToken);
+            newChatRoomSessionCacheValue.addNickname(nickname);
 
             save(newChatRoomSessionCacheValue);
         }
     }
 
-    public void deleteSession(String roomId, String fcmToken) {
+    public void deleteSession(String roomId, String nickname) {
         Optional<ChatRoomSessionCacheValue> chatRoomSessionCacheValue = get(roomId);
 
         if (chatRoomSessionCacheValue.isPresent()) {
-            chatRoomSessionCacheValue.get().deleteFcmToken(fcmToken);
+            chatRoomSessionCacheValue.get().deleteNickname(nickname);
             save(chatRoomSessionCacheValue.get());
         }
     }
