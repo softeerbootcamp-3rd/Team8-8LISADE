@@ -2,41 +2,29 @@ package com.lisade.togeduck.mapper;
 
 import com.lisade.togeduck.dto.request.ChatJoinRequest;
 import com.lisade.togeduck.dto.request.ChatMessageRequest;
-import com.lisade.togeduck.dto.response.ChatMessageResponse;
 import com.lisade.togeduck.entity.ChatMessage;
-import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.MessageAction;
 
 public class ChatMapper {
 
-    public static ChatMessage toChatMessage(User user, ChatMessageResponse chatMessageResponse) {
+    public static ChatMessage toChatMessage(ChatMessageRequest chatMessageRequest) {
         return ChatMessage.builder()
-            .roomId(chatMessageResponse.getRoomId())
-            .sender(user.getNickname())
-            .message(chatMessageResponse.getMessage())
-            .action(MessageAction.getMessageAction(chatMessageResponse.getAction()))
-            .createdAt(chatMessageResponse.getCreatedAt()).build();
+            .roomId(chatMessageRequest.getRoomId())
+            .sender(chatMessageRequest.getSender())
+            .message(chatMessageRequest.getMessage())
+            .action(MessageAction.getMessageAction(chatMessageRequest.getAction()))
+            .createdAt(chatMessageRequest.getCreatedAt()).build();
     }
 
-    public static ChatMessageResponse toChatMessageResponse(User user,
-        ChatMessageRequest chatMessageResponse) {
-        return ChatMessageResponse.builder()
-            .roomId(chatMessageResponse.getRoomId())
-            .sender(user.getNickname())
-            .message(chatMessageResponse.getMessage())
-            .createdAt(chatMessageResponse.getCreatedAt())
-            .action(chatMessageResponse.getAction())
-            .build();
-    }
-
-    public static ChatMessageResponse toChatMessageResponse(User user,
-        ChatJoinRequest chatJoinRequest, String message) {
-        return ChatMessageResponse.builder()
+    public static ChatMessageRequest toChatMessageRequest(ChatJoinRequest chatJoinRequest,
+        String message) {
+        return ChatMessageRequest.builder()
             .roomId(chatJoinRequest.getRoomId())
-            .sender(user.getNickname())
+            .sender(chatJoinRequest.getSender())
             .message(message)
-            .createdAt(chatJoinRequest.getCreatedAt())
             .action(MessageAction.JOIN.name())
+            .createdAt(chatJoinRequest.getCreatedAt())
+            .uuid(chatJoinRequest.getUuid())
             .build();
     }
 }
