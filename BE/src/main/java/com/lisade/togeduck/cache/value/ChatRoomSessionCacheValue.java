@@ -20,19 +20,19 @@ public class ChatRoomSessionCacheValue {
     private String id;
     @Indexed
     private String roomId;
-    private List<String> fcmTokens;
+    private List<String> nicknames;
 
     private ChatRoomSessionCacheValue(String roomId) {
         this.roomId = roomId;
-        this.fcmTokens = new ArrayList<>();
+        this.nicknames = new ArrayList<>();
     }
 
-    public void addFcmToken(String fcmToken) {
-        fcmTokens.add(fcmToken);
+    public void addNickname(String nickname) {
+        nicknames.add(nickname);
     }
 
-    public void deleteFcmToken(String fcmToken) {
-        fcmTokens.remove(fcmToken);
+    public void deleteNickname(String nickname) {
+        nicknames.remove(nickname);
     }
 
     public static ChatRoomSessionCacheValue of(String roomId) {
