@@ -1,18 +1,17 @@
 package com.lisade.togeduck.controller;
 
-import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.ChatJoinRequest;
 import com.lisade.togeduck.dto.request.ChatMessageRequest;
-import com.lisade.togeduck.dto.response.ChatMessageResponse;
-import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.mapper.ChatMapper;
 import com.lisade.togeduck.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ChatController {
@@ -21,24 +20,22 @@ public class ChatController {
     private final SimpMessageSendingOperations simpleMessageSendingOperations;
 
     @MessageMapping(value = "/chat/join")
-    public void join(@Login User user, @RequestBody ChatJoinRequest chatJoinRequest) {
-        String message = user.getNickname() + "님이 입장하셨습니다.";
+    public void join(@RequestBody ChatJoinRequest chatJoinRequest) {
+        String message = chatJoinRequest.getSender() + "님이 입장하셨습니다.";
 
-        ChatMessageResponse chatMessageResponse = ChatMapper.toChatMessageResponse(user,
-            chatJoinRequest, message);
-        chatService.save(user, chatMessageResponse);
+        ChatMessageRequest chatMessageRequest = ChatMapper.toChatMessageRequest(chatJoinRequest,
+            message);
+        chatService.save(chatMessageRequest);
 
         simpleMessageSendingOperations.convertAndSend(
-            "/topic/message/" + chatJoinRequest.getRoomId(), chatMessageResponse);
+            "/topic/message/" + chatJoinRequest.getRoomId(), chatMessageRequest);
     }
 
     @MessageMapping(value = "/chat/message")
-    public void message(@Login User user, @RequestBody ChatMessageRequest chatMessageRequest) {
-        ChatMessageResponse chatMessageResponse = ChatMapper.toChatMessageResponse(user,
-            chatMessageRequest);
-        chatService.save(user, chatMessageResponse);
+    public void message(@RequestBody ChatMessageRequest chatMessageRequest) {
+        chatService.save(chatMessageRequest);
 
         simpleMessageSendingOperations.convertAndSend(
-            "/topic/message/" + chatMessageRequest.getRoomId(), chatMessageResponse);
+            "/topic/message/" + chatMessageRequest.getRoomId(), chatMessageRequest);
     }
 }
