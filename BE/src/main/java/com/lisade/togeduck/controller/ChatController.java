@@ -1,7 +1,6 @@
 package com.lisade.togeduck.controller;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
-import com.lisade.togeduck.constant.FcmType;
 import com.lisade.togeduck.dto.request.ChatJoinRequest;
 import com.lisade.togeduck.dto.request.ChatMessageRequest;
 import com.lisade.togeduck.mapper.ChatMapper;
@@ -43,9 +42,6 @@ public class ChatController {
         simpleMessageSendingOperations.convertAndSend(
             "/topic/message/" + chatMessageRequest.getRoomId(), chatMessageRequest);
 
-        fcmService.sendNotification(chatMessageRequest.getRoomName(),
-            chatMessageRequest.getSender(),
-            chatMessageRequest.getMessage(), FcmType.MESSAGE,
-            chatMessageRequest.getRoomId().toString());
+        fcmService.sendNotification(chatMessageRequest);
     }
 }
