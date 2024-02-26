@@ -13,6 +13,7 @@ import lombok.Setter;
 public class ChatMessageRequest {
 
     private Long roomId;
+    private String roomName;
     @Setter
     private String message;
     private String action;
