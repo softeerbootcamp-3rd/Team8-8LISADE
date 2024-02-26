@@ -1,9 +1,12 @@
 package com.lisade.togeduck.controller;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.lisade.togeduck.constant.FcmType;
 import com.lisade.togeduck.dto.request.ChatJoinRequest;
 import com.lisade.togeduck.dto.request.ChatMessageRequest;
 import com.lisade.togeduck.mapper.ChatMapper;
 import com.lisade.togeduck.service.ChatService;
+import com.lisade.togeduck.service.FcmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ChatController {
 
+    private final FcmService fcmService;
     private final ChatService chatService;
     private final SimpMessageSendingOperations simpleMessageSendingOperations;
 
@@ -32,10 +36,16 @@ public class ChatController {
     }
 
     @MessageMapping(value = "/chat/message")
-    public void message(@RequestBody ChatMessageRequest chatMessageRequest) {
+    public void message(@RequestBody ChatMessageRequest chatMessageRequest)
+        throws FirebaseMessagingException {
         chatService.save(chatMessageRequest);
 
         simpleMessageSendingOperations.convertAndSend(
             "/topic/message/" + chatMessageRequest.getRoomId(), chatMessageRequest);
+
+        fcmService.sendNotification(chatMessageRequest.getRoomName(),
+            chatMessageRequest.getSender(),
+            chatMessageRequest.getMessage(), FcmType.MESSAGE,
+            chatMessageRequest.getRoomId().toString());
     }
 }
