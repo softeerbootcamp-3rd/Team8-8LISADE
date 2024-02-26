@@ -27,7 +27,7 @@ public class ChannelInboundInterceptor implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
-        if (accessor.getCommand() == StompCommand.MESSAGE) {
+        if (accessor.getCommand() == StompCommand.SEND) {
             String payload = new String((byte[]) message.getPayload());
             String chatSession = accessor.getSessionId();
             Optional<ChatRoomSessionCacheValue> chatRoomSessionCacheValue = chatRoomSessionCacheService.get(
@@ -50,7 +50,6 @@ public class ChannelInboundInterceptor implements ChannelInterceptor {
             newPayload.deleteCharAt(newPayload.length() - 1);
             newPayload.append(additionMessage);
 
-            log.info(newPayload.toString());
             return MessageBuilder.withPayload(newPayload.toString())
                 .copyHeaders(message.getHeaders())
                 .build();
@@ -65,7 +64,6 @@ public class ChannelInboundInterceptor implements ChannelInterceptor {
 
         if (accessor.getCommand() == StompCommand.CONNECT) {
             String loginSession = accessor.getFirstNativeHeader("Cookie");
-            log.info(loginSession);
             String chatSession = accessor.getSessionId();
 
             chatRoomSessionCacheService.save(
