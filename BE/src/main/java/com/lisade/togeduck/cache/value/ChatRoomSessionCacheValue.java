@@ -1,7 +1,5 @@
 package com.lisade.togeduck.cache.value;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,23 +17,17 @@ public class ChatRoomSessionCacheValue {
     @Id
     private String id;
     @Indexed
-    private String roomId;
-    private List<String> nicknames;
+    private String chatSession;
+    @Indexed
+    private String loginSession;
 
-    private ChatRoomSessionCacheValue(String roomId) {
-        this.roomId = roomId;
-        this.nicknames = new ArrayList<>();
+    private ChatRoomSessionCacheValue(String chatSession, String loginSession) {
+        this.chatSession = chatSession;
+        this.loginSession = loginSession;
     }
 
-    public void addNickname(String nickname) {
-        nicknames.add(nickname);
-    }
 
-    public void deleteNickname(String nickname) {
-        nicknames.remove(nickname);
-    }
-
-    public static ChatRoomSessionCacheValue of(String roomId) {
-        return new ChatRoomSessionCacheValue(roomId);
+    public static ChatRoomSessionCacheValue of(String chatSession, String loginSession) {
+        return new ChatRoomSessionCacheValue(chatSession, loginSession);
     }
 }

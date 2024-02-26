@@ -12,35 +12,17 @@ public class ChatRoomSessionCacheService {
 
     private final ChatRoomSessionCacheRepository chatRoomSessionCacheRepository;
 
-    public Optional<ChatRoomSessionCacheValue> get(String roomId) {
-        return chatRoomSessionCacheRepository.findByRoomId(roomId);
+    public Optional<ChatRoomSessionCacheValue> get(String chatSession) {
+        return chatRoomSessionCacheRepository.findByChatSession(chatSession);
     }
 
     public void save(ChatRoomSessionCacheValue chatRoomSessionCacheValue) {
         chatRoomSessionCacheRepository.save(chatRoomSessionCacheValue);
     }
 
-    public void addSession(String roomId, String nickname) {
-        Optional<ChatRoomSessionCacheValue> chatRoomSessionCacheValue = get(roomId);
+    public void delete(String chatSession) {
+        Optional<ChatRoomSessionCacheValue> chatRoomSessionCacheValue = get(chatSession);
 
-        if (chatRoomSessionCacheValue.isPresent()) {
-            chatRoomSessionCacheValue.get().addNickname(nickname);
-            save(chatRoomSessionCacheValue.get());
-        } else {
-            ChatRoomSessionCacheValue newChatRoomSessionCacheValue = ChatRoomSessionCacheValue.of(
-                roomId);
-            newChatRoomSessionCacheValue.addNickname(nickname);
-
-            save(newChatRoomSessionCacheValue);
-        }
-    }
-
-    public void deleteSession(String roomId, String nickname) {
-        Optional<ChatRoomSessionCacheValue> chatRoomSessionCacheValue = get(roomId);
-
-        if (chatRoomSessionCacheValue.isPresent()) {
-            chatRoomSessionCacheValue.get().deleteNickname(nickname);
-            save(chatRoomSessionCacheValue.get());
-        }
+        chatRoomSessionCacheValue.ifPresent(chatRoomSessionCacheRepository::delete);
     }
 }
