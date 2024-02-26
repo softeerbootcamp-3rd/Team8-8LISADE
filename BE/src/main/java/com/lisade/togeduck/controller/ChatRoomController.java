@@ -1,13 +1,16 @@
 package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.annotation.Login;
+import com.lisade.togeduck.dto.response.ChatJoinResponse;
 import com.lisade.togeduck.dto.response.ChatRoomResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.service.ChatRoomService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,13 +21,12 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping("/rooms")
-    public void create(
-        @Login User user) {
-        chatRoomService.create(user, 1L); //todo 삭제 예정 (test 용)
+    public List<ChatRoomResponse> getList(@Login User user) {
+        return chatRoomService.getList(user);
     }
 
-    @GetMapping("/{room_id}")
-    public ChatRoomResponse join(@Login User user, @PathVariable("room_id") Long roomId) {
-        return chatRoomService.get(roomId);
+    @PostMapping
+    public ChatJoinResponse join(@Login User user, @RequestParam("routeId") Long routeId) {
+        return chatRoomService.join(user, routeId);
     }
 }

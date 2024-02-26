@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatRoomResponse {
+public class ChatJoinResponse {
 
-    private Long id;
+    private Long chatRoomId;
     private Long routeId;
-    private String roomName;
-    private String thumbnailPath;
 }
