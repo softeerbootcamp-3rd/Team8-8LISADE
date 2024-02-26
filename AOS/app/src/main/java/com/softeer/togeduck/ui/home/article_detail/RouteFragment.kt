@@ -8,25 +8,19 @@ import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
-import com.softeer.togeduck.data.model.home.open_route.RouteListModel
+import com.softeer.togeduck.data.model.home.article_detail.RouteListModel
 import com.softeer.togeduck.databinding.FragmentRouteBinding
 import com.softeer.togeduck.utils.ItemClick
+import com.softeer.togeduck.utils.showErrorToast
+import dagger.hilt.android.AndroidEntryPoint
 
 
-private val dummyData = listOf(
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-)
-
+@AndroidEntryPoint
 class RouteFragment : Fragment() {
 
     private lateinit var adapter: RouteListAdapter
@@ -51,12 +45,18 @@ class RouteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        routeViewModel.getArticleRouteList()
         setUpArrayAdapter()
-        init()
         makePopUp()
         binding.makeRouteBtn.setOnClickListener {
             findNavController().navigate(R.id.action_routeFragment_to_openRouteActivity)
         }
+        routeViewModel.articleRouteList.observe(viewLifecycleOwner, Observer {
+            init(it)
+        })
+        routeViewModel.errMessage.observe(viewLifecycleOwner, Observer {
+            showErrorToast(requireContext(), it.toString())
+        })
 
     }
 
@@ -66,10 +66,11 @@ class RouteFragment : Fragment() {
             ArrayAdapter(requireContext(), R.layout.item_category_sort_list, R.id.textView,regionArray)
         binding.listSortMenu.adapter = arrayAdapter
         binding.vm = routeViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    private fun init() {
-        adapter = RouteListAdapter(dummyData)
+    private fun init(data:List<RouteListModel>) {
+        adapter = RouteListAdapter(data)
         val rvList = binding.rvRouteList
         val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         rvList.adapter = adapter

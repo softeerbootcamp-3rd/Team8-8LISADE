@@ -17,8 +17,8 @@
         android:padding="16dp">
         <ImageView
             android:id="@+id/articleImg"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:s3ImageUrl="@{homeArticle.imgUrl}"

@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.reserve_status.reserve_detail.SeatChartViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +45,7 @@
             android:background="@drawable/rectangle_radius"
             android:backgroundTint="@color/mint"
             android:gravity="center"
-            android:text="28인승"
+            android:text="@{vm.seatChart.totalSeats+`인승`}"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -115,7 +118,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:mode="read_only" />
+                app:backSeatsCnt="@{String.valueOf(vm.seatChart.backSeatsCnt)}"
+                app:mode="read_only"
+                app:mySeatNum="@{String.valueOf(vm.seatChart.mySeatNo)}"
+                app:seatsCntPerRow="@{String.valueOf(vm.seatChart.seatsCntPerRow)}"
+                app:totalRows="@{String.valueOf(vm.seatChart.totalRows)}" />
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

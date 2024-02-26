@@ -47,7 +47,9 @@ class ReserveStatusDetailInfoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.checkTicket.setOnClickListener {
-            findNavController().navigate(R.id.action_reserveStatusDetailInfoFragment_to_mobileTicketFragment)
+            val routeId = reserveDetailViewModel.routeId
+            val action = ReserveStatusDetailInfoFragmentDirections.actionReserveStatusDetailInfoFragmentToMobileTicketFragment(routeId)
+            findNavController().navigate(action)
         }
 
         reserveDetailViewModel.loadReserveStatusDetailData()

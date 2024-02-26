@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.home.article_detail.ArticleDetailViewModel" />
 
     </data>
 

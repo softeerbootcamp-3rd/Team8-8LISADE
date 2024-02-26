@@ -17,7 +17,7 @@ interface HomeService {
     @GET("festivals/best")
     suspend fun getPopularArticle():HomePopularArticleResponse
 
-    @GET("/festivals")
+    @GET("festivals")
     suspend fun getCategoryFestival(
         @QueryMap queryParameters: Map<String, String>,
     ):HomeCategoryFestivalResponse

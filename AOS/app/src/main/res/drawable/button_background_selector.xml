@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 버튼 비활성화 상태 -->
+    <item android:state_enabled="false">
+        <color android:color="#D3D3D3"/>
+    </item>
+    <!-- 버튼 활성화 상태 -->
+    <item android:state_enabled="true">
+        <color android:color="@color/main"/>
+    </item>
+</selector>

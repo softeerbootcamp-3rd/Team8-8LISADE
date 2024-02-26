@@ -1,6 +1,7 @@
 package com.lisade.togeduck.mapper;
 
 import com.lisade.togeduck.dto.response.BusLayoutResponse;
+import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.SeatListResponse;
 import com.lisade.togeduck.dto.response.SeatResponse;
 import com.lisade.togeduck.entity.Route;
@@ -12,12 +13,18 @@ import java.util.stream.Stream;
 public class SeatMapper {
 
     public static SeatListResponse toSeatListResponse(BusLayoutResponse busLayoutResponse,
-        List<SeatResponse> seats) {
+        RouteCityAndDestinationDetail routeCityAndDestinationDetail, List<SeatResponse> seats) {
         return SeatListResponse.builder()
-            .numberOfSeats(busLayoutResponse.getNumberOfSeats())
+            .totalSeats(busLayoutResponse.getNumberOfSeats())
             .row(busLayoutResponse.getRow())
             .col(busLayoutResponse.getCol())
             .backSeats(busLayoutResponse.getBackSeats())
+            .reservedSeats(routeCityAndDestinationDetail.getReservedSeats())
+            .sourceCity(routeCityAndDestinationDetail.getSourceCity())
+            .source(routeCityAndDestinationDetail.getSource())
+            .destinationCity(routeCityAndDestinationDetail.getDestinationCity())
+            .destination(routeCityAndDestinationDetail.getDestination())
+            .price(routeCityAndDestinationDetail.getPrice())
             .seats(seats)
             .build();
     }

@@ -20,7 +20,6 @@ fun String.convertS3Url(): String {
 
     val bucketName = withoutPrefix.substringBefore("/")
     val objectKey = withoutPrefix.substringAfter("/")
-//    Log.d("TESTLOG222", "$httpPrefix$bucketName$s3Domain$objectKey")
 
     return "$httpPrefix$bucketName$s3Domain$objectKey"
 }

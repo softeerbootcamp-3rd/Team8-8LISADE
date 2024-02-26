@@ -1,4 +1,4 @@
-package com.softeer.togeduck.data.remote.datasource.home
+package com.softeer.togeduck.data.remote.datasource
 
 import android.util.Log
 import com.softeer.togeduck.data.dto.response.home.HomeCategoryFestivalResponse

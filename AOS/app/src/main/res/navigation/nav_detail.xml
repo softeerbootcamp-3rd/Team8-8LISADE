@@ -32,6 +32,10 @@
         <action
             android:id="@+id/action_routeFragment_to_seatActivity2"
             app:destination="@id/seatActivity2" />
+        <argument
+            android:name="aritcleId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <activity
         android:id="@+id/openRouteActivity"

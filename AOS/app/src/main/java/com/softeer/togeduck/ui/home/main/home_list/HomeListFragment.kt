@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -16,17 +17,6 @@ import com.softeer.togeduck.data.model.home.main.HomeArticleModel
 import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
 import com.softeer.togeduck.databinding.FragmentHomeListBinding
 import com.softeer.togeduck.utils.ItemClick
-
-
-private val dummyData = listOf(
-    HomeCategoryModel("dummy", "스포츠"),
-    HomeCategoryModel("dummy", "뮤지컬"),
-    HomeCategoryModel("dummy", "콘서트"),
-    HomeCategoryModel("dummy", "팬미팅"),
-    HomeCategoryModel("dummy", "애니메이션"),
-    HomeCategoryModel("dummy", "기타"),
-)
-
 
 class HomeListFragment : Fragment() {
     private var _binding: FragmentHomeListBinding? = null
@@ -50,10 +40,6 @@ class HomeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
-//        homeListViewModel.festivalList.observe(viewLifecycleOwner, Observer {
-//            setUpRvArticleListRecyclerView(it)
-//        })
         homeListViewModel.apply {
             festivalList.observe(viewLifecycleOwner, Observer {
                 setUpRvArticleListRecyclerView(it)
@@ -113,7 +99,9 @@ class HomeListFragment : Fragment() {
         }
         articleAdapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
-                findNavController().navigate(R.id.action_homeListFragment_to_articleDetailActivity)
+                val articleId = data[position].id
+                val action = HomeListFragmentDirections.actionHomeListFragmentToArticleDetailActivity(articleId)
+                findNavController().navigate(action)
             }
         }
 

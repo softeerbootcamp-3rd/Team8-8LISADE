@@ -5,7 +5,7 @@
     <data>
         <variable
             name="route"
-            type="com.softeer.togeduck.data.model.home.open_route.RouteListModel" />
+            type="com.softeer.togeduck.data.model.home.article_detail.RouteListModel" />
 
     </data>
 

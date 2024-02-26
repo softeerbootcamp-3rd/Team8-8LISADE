@@ -23,4 +23,6 @@ public interface FestivalService {
     BestFestivalResponse getBest();
 
     Slice<FestivalRoutesResponse> getRoutes(Pageable pageable, Long id, String cityName);
+
+    String getImage(Long id);
 }

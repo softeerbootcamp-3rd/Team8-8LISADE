@@ -1,8 +1,6 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.SeatRegistrationRequest;
-import com.lisade.togeduck.dto.response.BusLayoutResponse;
-import com.lisade.togeduck.dto.response.SeatListResponse;
 import com.lisade.togeduck.dto.response.SeatResponse;
 import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.User;
@@ -10,7 +8,6 @@ import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
 import com.lisade.togeduck.exception.SeatNotFoundException;
-import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.SeatRepository;
 import jakarta.persistence.LockModeType;
 import java.util.List;
@@ -24,15 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class SeatService {
 
     private final SeatRepository seatRepository;
-    private final BusService busService;
 
-    public SeatListResponse getList(Long routeId) {
-        BusLayoutResponse busLayoutResponse = busService.getBusLayout(routeId);
+    public List<SeatResponse> getList(Long routeId) {
         List<SeatResponse> seats = seatRepository.findSeatsByRouteId(routeId);
 
         validateSeats(seats);
 
-        return SeatMapper.toSeatListResponse(busLayoutResponse, seats);
+        return seats;
     }
 
     @Transactional

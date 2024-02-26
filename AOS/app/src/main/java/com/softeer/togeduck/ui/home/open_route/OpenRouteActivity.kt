@@ -5,7 +5,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import com.softeer.togeduck.databinding.ActivityOpenRouteBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OpenRouteActivity : AppCompatActivity() {
     private var _binding: ActivityOpenRouteBinding? = null
     private val binding get() = _binding!!

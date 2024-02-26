@@ -20,6 +20,7 @@
     <color name="blue">#435FA7</color>
     <color name="divider">#B2B7BD</color>
     <color name="searchBar">#ebe3f1</color>
+    <color name="unselected">#BDBDBD</color>
 
 
 </resources>

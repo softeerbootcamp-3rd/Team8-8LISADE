@@ -43,6 +43,7 @@ public class FestivalRepositoryImpl implements FestivalRepositoryCustom {
                 festival.title,
                 festival.location,
                 festival.startedAt,
+                festival.endAt,
                 festival.thumbnailPath
             )).from(festival)
             .where(festival.category.id.eq(categoryId)

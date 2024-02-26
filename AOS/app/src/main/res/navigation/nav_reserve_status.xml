@@ -18,5 +18,20 @@
         android:id="@+id/mobileTicketFragment"
         android:name="com.softeer.togeduck.ui.reserve_status.reserve_detail.MobileTicketFragment"
         android:label="fragment_mobile_ticket"
-        tools:layout="@layout/fragment_mobile_ticket" />
+        tools:layout="@layout/fragment_mobile_ticket">
+        <action
+            android:id="@+id/action_mobileTicketFragment_to_seatChartFragmentDialogue"
+            app:destination="@id/seatChartFragmentDialogue" />
+        <argument
+            android:name="routeId"
+            app:argType="integer" />
+    </fragment>
+    <dialog
+        android:id="@+id/seatChartFragmentDialogue"
+        android:name="com.softeer.togeduck.ui.reserve_status.reserve_detail.SeatChartFragmentDialogue"
+        android:label="SeatChartFragmentDialogue">
+        <argument
+            android:name="routeId"
+            app:argType="integer" />
+    </dialog>
 </navigation>

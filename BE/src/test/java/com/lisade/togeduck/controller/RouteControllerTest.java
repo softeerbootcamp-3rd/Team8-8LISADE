@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
+import com.lisade.togeduck.service.ChatRoomService;
 import com.lisade.togeduck.service.RouteService;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -35,6 +36,8 @@ class RouteControllerTest {
     private MockMvc mockMvc;
     @MockBean
     RouteService routeService;
+    @MockBean
+    ChatRoomService chatRoomService;
 
     @Test
     @DisplayName("사용자가 특적 페스티벌 id와 노선 id를 전달하였을때 해당 노선에 대한 자세한 정보를 return 한다.")

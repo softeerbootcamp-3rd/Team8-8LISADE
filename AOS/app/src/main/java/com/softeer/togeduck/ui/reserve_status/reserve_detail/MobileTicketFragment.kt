@@ -6,12 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentMobileTicketBinding
+import com.softeer.togeduck.utils.showErrorToast
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MobileTicketFragment : Fragment() {
     private var _binding: FragmentMobileTicketBinding? = null
     private val binding get() = _binding!!
+    private val mobileTicketViewModel: MobileTicketViewModel by viewModels()
+    private val args: MobileTicketFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +33,7 @@ class MobileTicketFragment : Fragment() {
         _binding =
             DataBindingUtil.inflate(
                 inflater,
-                com.softeer.togeduck.R.layout.fragment_mobile_ticket,
+                R.layout.fragment_mobile_ticket,
                 container,
                 false
             )
@@ -35,13 +44,28 @@ class MobileTicketFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.seatingChartBtn.setOnClickListener {
-            showDialog()
-        }
+        init()
     }
 
-    private fun showDialog() {
-        val dialogFragment = SeatChartFragmentDialogue()
-        dialogFragment.show(parentFragmentManager,"SeatChartFragmentDialogue")
+    private fun init() {
+        val routeId = args.routeId
+        mobileTicketViewModel.routeId = routeId
+
+        mobileTicketViewModel.loadMobileTicketData()
+        binding.seatingChartBtn.setOnClickListener {
+            val routeId = mobileTicketViewModel.routeId
+            val action =
+                MobileTicketFragmentDirections.actionMobileTicketFragmentToSeatChartFragmentDialogue(
+                    routeId
+                )
+            findNavController().navigate(action)
+        }
+
+        mobileTicketViewModel.errMessage.observe(viewLifecycleOwner) {
+            showErrorToast(requireContext(), it.toString())
+        }
+
+
     }
+
 }

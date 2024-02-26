@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.reserve_status.reserve_detail.MobileTicketViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,11 +76,11 @@
             android:id="@+id/ticketContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="32dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="@dimen/ticket_elevation"
-            app:layout_constraintBottom_toTopOf="@id/shareBtn"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
             app:layout_constraintTop_toBottomOf="@id/header_top" />
@@ -99,7 +102,7 @@
             android:layout_marginBottom="5dp"
             android:background="@color/transparent"
             android:elevation="@dimen/ticket_elevation"
-            android:text="행사명 입니다."
+            android:text="@{vm.mobileTicket.title}"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -114,7 +117,7 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:elevation="@dimen/ticket_elevation"
-            android:text="행사 일정 [장소] 입니다."
+            android:text="@{vm.mobileTicket.startedAt}"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/ticketTitleContainer"
@@ -160,7 +163,7 @@
             android:layout_height="0dp"
             android:elevation="@dimen/ticket_elevation"
             app:dividerColor="@color/gray100"
-            app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
+            app:layout_constraintBottom_toBottomOf="@id/dividerHorizon2"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
             app:layout_constraintTop_toBottomOf="@id/dividerHorizon1" />
@@ -184,7 +187,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
-            android:text="부산(부산 시청 앞)"
+            android:text="@{vm.mobileTicket.departurePlace}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/departureTime"
             app:layout_constraintEnd_toEndOf="@id/dividerVertical"
@@ -198,7 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
-            android:text="09:00"
+            android:text="@{vm.mobileTicket.departureTime}"
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/dividerHorizon2"
@@ -236,7 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
-            android:text="서울(고척스카이돔)"
+            android:text="@{vm.mobileTicket.arrivalPlace}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/arrivalTime"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
@@ -250,7 +253,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
-            android:text="14:30"
+            android:text="@{vm.mobileTicket.arrivalTime}"
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/dividerHorizon2"
@@ -286,11 +289,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="@dimen/ticket_elevation"
-            android:text="8A"
+            android:text="@{vm.mobileTicket.seatNo}"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/seatingChartBtn"
-            app:layout_constraintEnd_toStartOf="@id/dividerVertical"
+            app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
             app:layout_constraintTop_toBottomOf="@id/seatNumberText"
             app:layout_constraintVertical_bias="0.3" />
@@ -309,94 +312,16 @@
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
+            android:padding="0dp"
             android:text="@string/seating_chart"
-            android:padding="0dp"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            app:cornerRadius="5dp"
-            app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
-            app:layout_constraintEnd_toStartOf="@id/dividerVertical"
-            app:layout_constraintStart_toStartOf="@id/ticketContainer" />
-
-        <TextView
-            android:id="@+id/realTimeBusLocationText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:elevation="@dimen/ticket_elevation"
-            android:text="@string/real_time_bus_location"
-            android:textColor="@color/main"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/arrivalText"
-            app:layout_constraintTop_toBottomOf="@id/dividerHorizon2" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/busLocationBtn"
-            style="@style/Widget.Material3.Button.IconButton.Filled"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:padding="0dp"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/navy800"
-            android:elevation="@dimen/ticket_elevation"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            android:text="@string/check_bus_location"
             android:textColor="@color/white"
             android:textSize="13sp"
             android:textStyle="bold"
             app:cornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
-            app:layout_constraintStart_toEndOf="@id/dividerVertical" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/shareBtn"
-            style="@style/Widget.Material3.Button.IconButton.Outlined"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="8dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:cornerRadius="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideRight"
-            app:layout_constraintStart_toStartOf="@id/guideLeft"
-            app:strokeColor="@color/gray230"
-            app:strokeWidth="1dp" />
-
-        <ImageView
-            android:id="@+id/shareIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="5dp"
-            android:background="@color/transparent"
-            android:src="@drawable/icon_share"
-            app:layout_constraintBottom_toBottomOf="@id/shareBtn"
-            app:layout_constraintEnd_toStartOf="@id/shareText"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@id/shareBtn"
-            app:layout_constraintTop_toTopOf="@id/shareBtn" />
-
-        <TextView
-            android:id="@+id/shareText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:text="@string/share"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@id/shareBtn"
-            app:layout_constraintEnd_toEndOf="@id/shareBtn"
-            app:layout_constraintStart_toEndOf="@id/shareIcon"
-            app:layout_constraintTop_toTopOf="@id/shareBtn" />
+            app:layout_constraintStart_toStartOf="@id/ticketContainer"
+            app:layout_constraintWidth_percent="0.4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

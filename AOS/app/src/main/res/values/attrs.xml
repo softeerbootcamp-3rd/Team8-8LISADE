@@ -5,5 +5,10 @@
             <enum name="selectable" value="0" />
             <enum name="read_only" value="1" />
         </attr>
+        <attr name="seatsCntPerRow" format="string" />
+        <attr name="backSeatsCnt" format="string" />
+        <attr name="totalRows" format="string" />
+        <attr name="mySeatNum" format="string" />
+        <attr name="soldOutSeatNums" format="string" />
     </declare-styleable>
 </resources>

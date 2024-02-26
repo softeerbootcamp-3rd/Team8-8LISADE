@@ -1,4 +1,4 @@
-package com.softeer.togeduck.data.model.home.open_route
+package com.softeer.togeduck.data.model.home.article_detail
 
 data class RouteListModel(
     val startDate: String,

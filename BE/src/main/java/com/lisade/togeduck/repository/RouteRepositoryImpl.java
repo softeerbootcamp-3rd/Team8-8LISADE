@@ -9,7 +9,9 @@ import static com.lisade.togeduck.entity.QSeat.seat;
 import static com.lisade.togeduck.entity.QStation.station;
 import static com.lisade.togeduck.entity.QUser.user;
 
+import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
+import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
@@ -17,6 +19,7 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAnd
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
+import com.lisade.togeduck.dto.response.UserSeatDetailResponse;
 import com.lisade.togeduck.entity.enums.RouteStatus;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.ExpressionUtils;
@@ -271,5 +274,58 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(seat)
             .on(seat.user.eq(user))
             .where(user.id.eq(userId));
+    }
+
+    @Override
+    public RouteCityAndDestinationDetail getRouteDetail(Long routeId) {
+        return queryFactory.select(Projections.constructor(RouteCityAndDestinationDetail.class,
+                route.numberOfReservationSeats,
+                route.station.city.name,
+                route.station.name,
+                route.festival.city.name,
+                route.festival.location,
+                route.price
+            ))
+            .from(route)
+            .join(route.festival)
+            .join(route.station)
+            .where(route.id.eq(routeId))
+            .fetchOne();
+    }
+
+    @Override
+    public UserSeatDetailResponse getSeatDetail(Long userId, Long routeId) {
+        return queryFactory.select(
+                Projections.constructor(UserSeatDetailResponse.class, seat.no, route.numberOfSeats,
+                    route.bus.row, route.bus.column, route.bus.backSeats))
+            .from(route)
+            .join(route.seats, seat)
+            .join(route.bus, bus)
+            .where(seat.user.id.eq(userId).and(route.id.eq(routeId)).and(seat.route.id.eq(routeId)))
+            .fetchOne();
+    }
+
+    @Override
+    public CoordinateResponse getCoordinate(Long routeId) {
+        return queryFactory.select(
+                Projections.constructor(CoordinateResponse.class,
+                    route.station.xPos,
+                    route.station.yPos,
+                    route.festival.xPos,
+                    route.festival.yPos,
+                    route.station.name,
+                    route.festival.location,
+                    route.startedAt,
+                    route.expectedTime,
+                    route.numberOfReservationSeats,
+                    route.numberOfSeats,
+                    route.price,
+                    route.festival.startedAt
+                ))
+            .from(route)
+            .join(route.station, station)
+            .join(route.festival, festival)
+            .where(route.id.eq(routeId))
+            .fetchOne();
     }
 }

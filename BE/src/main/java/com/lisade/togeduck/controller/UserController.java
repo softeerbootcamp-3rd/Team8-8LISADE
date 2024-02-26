@@ -8,6 +8,8 @@ import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
+import com.lisade.togeduck.dto.response.UserSeatDetailResponse;
+import com.lisade.togeduck.dto.response.UserTicketResponse;
 import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.service.UserService;
@@ -68,5 +70,17 @@ public class UserController {
 
         return userService.getReservedRouteInfo(user.getId(), routeId)
             .orElseThrow(RuntimeException::new);
+    }
+
+    @GetMapping("/routes/{route_id}/tickets")
+    public UserTicketResponse getTicket(@Login User user,
+        @PathVariable(name = "route_id") Long routeId) {
+        return userService.getTicket(user.getId(), routeId);
+    }
+
+    @GetMapping("/routes/{route_id}/tickets/seats")
+    public UserSeatDetailResponse getSeat(@Login User user,
+        @PathVariable(name = "route_id") Long routeId) {
+        return userService.getReservedSeat(user.getId(), routeId);
     }
 }

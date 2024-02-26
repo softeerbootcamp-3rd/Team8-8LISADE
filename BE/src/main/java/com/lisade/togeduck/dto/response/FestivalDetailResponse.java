@@ -18,4 +18,6 @@ public class FestivalDetailResponse {
     private List<String> paths;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
     private LocalDateTime startedAt;
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
+    private LocalDateTime endAt;
 }

@@ -5,7 +5,9 @@
 
     <data>
 
-        <import type="com.softeer.togeduck.ui.custom_view.SeatViewMode" />
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.home.seat.SeatViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
-            android:text="부산(시청 앞)"
+            android:text="@{vm.seatsInfo.departurePlace}"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -92,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@color/transparent"
-            android:text="서울(고척스카이돔)"
+            android:text="@{vm.seatsInfo.arrivalPlace}"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -117,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@color/transparent"
-            android:text="28"
+            android:text="@{String.valueOf(vm.seatsInfo.totalSeats)}"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -164,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@color/transparent"
-            android:text="22"
+            android:text="@{String.valueOf(vm.seatsInfo.remainingSeats)}"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -232,7 +234,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:mode="selectable" />
+                app:backSeatsCnt="@{String.valueOf(vm.seatsInfo.backSeatsCnt)}"
+                app:mode="selectable"
+                app:seatsCntPerRow="@{String.valueOf(vm.seatsInfo.seatsCntPerRow)}"
+                app:soldOutSeatNums="@{vm.seatsInfo.seats.toString()}"
+                app:totalRows="@{String.valueOf(vm.seatsInfo.totalRows)}" />
         </ScrollView>
 
         <TextView

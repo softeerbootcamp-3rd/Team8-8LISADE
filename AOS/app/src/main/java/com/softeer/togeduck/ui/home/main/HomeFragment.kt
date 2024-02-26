@@ -14,14 +14,6 @@ import com.softeer.togeduck.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-//private val dummyData = listOf(
-//    PopularArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "2024.02.07", "잠실종합운동장"),
-//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
-//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
-//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
-//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
-//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청")
-//)
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null

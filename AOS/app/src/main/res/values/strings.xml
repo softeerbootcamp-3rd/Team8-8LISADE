@@ -95,5 +95,9 @@
     <string name="chat_left_time">시간</string>
     <string name="chat_right_message">right message</string>
     <string name="chat_right_time">시간</string>
+    <string name="place">장소</string>
+    <string name="period">기간</string>
+    <string name="age_grade">관람연령</string>
+    <string name="all_grade">전체 관람가</string>
 
 </resources>

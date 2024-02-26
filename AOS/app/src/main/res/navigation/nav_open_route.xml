@@ -17,5 +17,9 @@
         android:id="@+id/seatActivity"
         android:name="com.softeer.togeduck.ui.home.seat.SeatActivity"
         android:label="activity_seat"
-        tools:layout="@layout/activity_seat" />
+        tools:layout="@layout/activity_seat" >
+        <argument
+            android:name="routeId"
+            app:argType="integer" />
+    </activity>
 </navigation>

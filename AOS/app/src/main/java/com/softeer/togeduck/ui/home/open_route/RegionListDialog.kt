@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.home.open_route.RegionDetailModel
@@ -15,22 +16,10 @@ import com.softeer.togeduck.data.model.home.open_route.RegionListModel
 import com.softeer.togeduck.databinding.DialogSelectRegionBinding
 import com.softeer.togeduck.utils.ItemClick
 import com.softeer.togeduck.utils.ItemClickWithData
+import com.softeer.togeduck.utils.showErrorToast
+import dagger.hilt.android.AndroidEntryPoint
 
-private val dummyData = listOf(
-    RegionListModel(
-        "서울",
-        listOf(RegionDetailModel("1"), RegionDetailModel("2"), RegionDetailModel("3"))
-    ),
-    RegionListModel(
-        "부산",
-        listOf(RegionDetailModel("4"), RegionDetailModel("5"), RegionDetailModel("6"))
-    ),
-    RegionListModel(
-        "대전",
-        listOf(RegionDetailModel("1"), RegionDetailModel("2"), RegionDetailModel("3"))
-    )
-)
-
+@AndroidEntryPoint
 class RegionListDialog : DialogFragment() {
 
     private var _binding: DialogSelectRegionBinding? = null
@@ -56,7 +45,32 @@ class RegionListDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        regionListAdapter = RegionListAdapter(dummyData)
+
+        init()
+        regionListViewModel.regionList.observe(viewLifecycleOwner, Observer {
+            setUpRegionListRecyclerView(it)
+        })
+        setUpDialogSize()
+        selectComplete()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
+    private fun init(){
+        binding.vm = regionListViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        regionListViewModel.getPopularFestival()
+        regionListViewModel.errMessage.observe(viewLifecycleOwner, Observer {
+            showErrorToast(requireContext(), it.toString())
+        })
+    }
+    private fun setUpRegionListRecyclerView(data:List<RegionListModel>) {
+        regionListAdapter = RegionListAdapter(data)
         regionDetailListAdapter = RegionDetailListAdapter(emptyList())
 
         binding.regionList.apply {
@@ -69,20 +83,6 @@ class RegionListDialog : DialogFragment() {
             adapter = regionDetailListAdapter
         }
 
-        init()
-        setUpDialogSize()
-        selectComplete()
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun init() {
-        binding.vm = regionListViewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         regionListAdapter.itemClick = object : ItemClickWithData {
             override fun onClick(view: View, position: Int, detailList: List<RegionDetailModel>) {
                 selectedView?.setBackgroundColor(Color.TRANSPARENT)
@@ -97,6 +97,7 @@ class RegionListDialog : DialogFragment() {
                             view.setBackgroundColor(color)
                             selectedDetailView = view
                             selectedRegion = detailList[position].detail
+                            regionListViewModel.selectCompleted()
                         }
                     }
                 }
@@ -126,6 +127,7 @@ class RegionListDialog : DialogFragment() {
     private fun selectComplete() {
         binding.selectConfirm.setOnClickListener {
             regionListViewModel.setSelectedRegion(selectedRegion)
+            regionListViewModel.isSelectedRegionCompleted()
             dialog?.dismiss()
         }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.softeer.togeduck.ui.home.open_route.RegionListViewModel" />
@@ -265,6 +266,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
             app:layout_constraintTop_toBottomOf="@id/selectBus" />
 
@@ -272,6 +274,11 @@
             android:id="@+id/bus14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/unselcted_image_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:src="@drawable/bus_14"
             app:layout_constraintBottom_toBottomOf="@id/busBox"
             app:layout_constraintEnd_toStartOf="@id/bus25"
@@ -282,6 +289,11 @@
             android:id="@+id/bus25"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/unselcted_image_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:src="@drawable/bus_25"
             app:layout_constraintBottom_toBottomOf="@id/busBox"
             app:layout_constraintEnd_toStartOf="@id/bus45"
@@ -292,6 +304,11 @@
             android:id="@+id/bus45"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/unselcted_image_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:src="@drawable/bus_45"
             app:layout_constraintBottom_toBottomOf="@id/busBox"
             app:layout_constraintEnd_toEndOf="@id/busBox"
@@ -315,9 +332,9 @@
             android:text="@string/price"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/openRouteButton"
             app:layout_constraintEnd_toStartOf="@id/totalPriceText"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
-            app:layout_constraintBottom_toTopOf="@id/openRouteButton"
             app:layout_constraintTop_toBottomOf="@id/dividerSelectBus" />
 
         <TextView
@@ -329,18 +346,20 @@
             android:text="10,000원"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/openRouteButton"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toEndOf="@id/totalPrice"
-            app:layout_constraintBottom_toTopOf="@id/openRouteButton"
             app:layout_constraintTop_toBottomOf="@id/dividerSelectBus" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/openRouteButton"
-            style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background_selector"
             android:backgroundTint="@color/main"
+            android:enabled="@{vm.isCanOpenRoute()}"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="@string/opened"
@@ -348,9 +367,9 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/totalPriceText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

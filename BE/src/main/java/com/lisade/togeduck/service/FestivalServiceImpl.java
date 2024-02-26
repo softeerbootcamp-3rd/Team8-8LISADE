@@ -113,4 +113,14 @@ public class FestivalServiceImpl implements FestivalService {
     public Slice<FestivalRoutesResponse> getRoutes(Pageable pageable, Long id, String cityName) {
         return routeRepository.findRoutes(pageable, id, cityName);
     }
+
+    @Override
+    public String getImage(Long id) {
+        Optional<Festival> optionalFestival = festivalRepository.findById(id);
+        if (optionalFestival.isEmpty()) {
+            throw new FestivalNotFoundException();
+        }
+        Festival festival = optionalFestival.get();
+        return festival.getThumbnailPath();
+    }
 }

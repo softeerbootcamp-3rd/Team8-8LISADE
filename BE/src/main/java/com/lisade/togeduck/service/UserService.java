@@ -10,6 +10,8 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAnd
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
+import com.lisade.togeduck.dto.response.UserSeatDetailResponse;
+import com.lisade.togeduck.dto.response.UserTicketResponse;
 import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
@@ -36,6 +38,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
     private final SessionCacheService sessionCacheService;
+    private final RouteService routeService;
 
     public User get(Long userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
@@ -137,5 +140,13 @@ public class UserService {
     private LocalTime getArrivedAt(LocalDateTime startedAt, LocalTime expectedAt) {
         return startedAt.toLocalTime().plusHours(expectedAt.getHour())
             .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
+    }
+
+    public UserSeatDetailResponse getReservedSeat(Long userId, Long routeId) {
+        return routeService.getSeat(userId, routeId);
+    }
+
+    public UserTicketResponse getTicket(Long userId, Long routeId) {
+        return userRepository.getTicket(userId, routeId);
     }
 }

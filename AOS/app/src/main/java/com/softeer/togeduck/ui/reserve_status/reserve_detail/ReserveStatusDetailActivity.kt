@@ -22,7 +22,7 @@ class ReserveStatusDetailActivity : AppCompatActivity() {
 
     private fun init() {
         val routeId = args.routeId
-        reserveStatusDetailViewModel.setRouteId(routeId)
+        reserveStatusDetailViewModel.routeId = routeId
     }
 
 }

@@ -14,6 +14,12 @@
             android:id="@+id/action_seatPaymentFragment_to_seatPaymentCompleteFragment"
             app:destination="@id/seatPaymentCompleteFragment"
             app:popUpTo="@id/nav_seat" />
+        <argument
+            android:name="routeId"
+            app:argType="integer" />
+        <argument
+            android:name="selectedSeatNum"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/seatSelectFragment"

@@ -52,4 +52,9 @@ public class FestivalController {
         @RequestParam(name = "city", required = false, defaultValue = "all") String cityName) {
         return festivalService.getRoutes(pageable, id, cityName);
     }
+
+    @GetMapping("/{festival_id}/images")
+    public String getFestivalImage(@PathVariable(value = "festival_id") Long id) {
+        return festivalService.getImage(id);
+    }
 }

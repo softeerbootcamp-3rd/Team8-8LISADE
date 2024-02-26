@@ -17,6 +17,7 @@ public class FestivalViewDto {
     String location;
     Long categoryId;
     LocalDateTime startedAt;
+    LocalDateTime endAt;
     LocalDateTime createdAt;
     String thumbnailPath;
     Integer weeklyViews;

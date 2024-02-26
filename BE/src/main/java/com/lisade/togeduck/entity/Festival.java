@@ -50,7 +50,7 @@ public class Festival extends BaseEntity {
 
     @Column(name = "popular_score")
     private Double popularScore;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
@@ -63,6 +63,9 @@ public class Festival extends BaseEntity {
 
     @Column(name = "started_at", nullable = false)
     private LocalDateTime startedAt;
+
+    @Column(name = "end_at", nullable = false)
+    private LocalDateTime endAt;
 
     @OneToMany(mappedBy = "festival", cascade = CascadeType.ALL)
     private List<FestivalImage> festivalImages;
