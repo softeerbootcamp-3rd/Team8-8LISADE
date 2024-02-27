@@ -6,7 +6,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetail;
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
 import com.lisade.togeduck.dto.response.UserSeatDetailResponse;
 import com.lisade.togeduck.dto.response.UserTicketResponse;
@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @GetMapping("/routes/{route_id}")
-    public UserReservedRouteDetailResponse getRouteInfo(@Login User user,
+    public UserReservedRouteDetail getRouteInfo(@Login User user,
         @PathVariable(name = "route_id") Long routeId) {
 
         return userService.getReservedRouteInfo(user.getId(), routeId)

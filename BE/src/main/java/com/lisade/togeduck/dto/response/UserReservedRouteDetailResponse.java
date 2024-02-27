@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserReservedRouteDetailResponse {
+public class UserReservedRouteDetailResponse implements UserReservedRouteDetail {
 
     private Long festivalId;
     private String title;

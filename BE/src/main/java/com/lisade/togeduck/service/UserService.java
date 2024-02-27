@@ -3,6 +3,7 @@ package com.lisade.togeduck.service;
 import com.lisade.togeduck.cache.service.SessionCacheService;
 import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailOneQueryResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
@@ -82,6 +83,13 @@ public class UserService {
             UserMapper.toUserReservedRouteDetailResponse(routeAndFestivalInfo, stationInfo,
                 seatInfo,
                 busInfo, driverInfo, arrivedAt));
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserReservedRouteDetailOneQueryResponse> getReservedRouteInfoOneQuery(
+        Long userId,
+        Long routeId) {
+
     }
 
     public Slice<UserReservedRouteResponse> getReservedRouteList(Pageable pageable, Long userId) {
