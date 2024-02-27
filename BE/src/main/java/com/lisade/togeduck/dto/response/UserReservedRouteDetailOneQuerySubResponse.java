@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserReservedRouteDetailOneQuerySunResponse {
+public class UserReservedRouteDetailOneQuerySubResponse {
 
     private Long festivalId;
     private String title;

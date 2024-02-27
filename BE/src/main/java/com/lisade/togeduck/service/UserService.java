@@ -3,8 +3,9 @@ package com.lisade.togeduck.service;
 import com.lisade.togeduck.cache.service.SessionCacheService;
 import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetail;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailOneQueryResponse;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailOneQuerySubResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
@@ -69,7 +70,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserReservedRouteDetailResponse> getReservedRouteInfo(Long userId,
+    public Optional<UserReservedRouteDetail> getReservedRouteInfo(Long userId,
         Long routeId) {
         RouteAndFestivalInfo routeAndFestivalInfo = findRouteAndFestivalInfo(routeId);
         StationInfo stationInfo = findStationInfo(routeId);
@@ -86,10 +87,35 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserReservedRouteDetailOneQueryResponse> getReservedRouteInfoOneQuery(
+    public Optional<UserReservedRouteDetail> getReservedRouteInfoOneQuery(
         Long userId,
         Long routeId) {
+        UserReservedRouteDetailOneQuerySubResponse response = routeRepository.findReservedRouteDetail(
+            userId, routeId);
+        LocalTime arrivedAt = getArrivedAt(response.getStartedAt(), response.getExpectedDuration());
 
+        return Optional.ofNullable(UserReservedRouteDetailOneQueryResponse.builder()
+            .festivalId(response.getFestivalId())
+            .title(response.getTitle())
+            .seatNo(response.getSeatNo())
+            .expectedDuration(response.getExpectedDuration())
+            .status(response.getStatus())
+            .totalSeats(response.getTotalSeats())
+            .reservedSeats(response.getReservedSeats())
+            .price(response.getPrice())
+            .imagePath(response.getImagePath())
+            .startedAt(response.getStartedAt())
+            .stationName(response.getStationName())
+            .stationCity(response.getStationCity())
+            .festivalLocation(response.getFestivalLocation())
+            .festivalCity(response.getFestivalCity())
+            .driverId(response.getDriverId())
+            .name(response.getName())
+            .company(response.getCompany())
+            .phoneNumber(response.getPhoneNumber())
+            .carNumber(response.getCarNumber())
+            .driverImagePath(response.getDriverImagePath())
+            .arrivedAt(arrivedAt).build());
     }
 
     public Slice<UserReservedRouteResponse> getReservedRouteList(Pageable pageable, Long userId) {

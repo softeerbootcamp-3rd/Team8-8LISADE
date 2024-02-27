@@ -7,6 +7,7 @@ import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QRoute.route;
 import static com.lisade.togeduck.entity.QSeat.seat;
 import static com.lisade.togeduck.entity.QStation.station;
+import static com.lisade.togeduck.entity.QUser.user;
 
 import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
@@ -14,6 +15,7 @@ import com.lisade.togeduck.dto.response.PaymentPageResponse;
 import com.lisade.togeduck.dto.response.PaymentPageResponse.RouteAndStationInfo;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailOneQuerySubResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
@@ -291,6 +293,47 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(route.festival, festival)
             .where(route.id.eq(routeId))
             .fetchOne();
+    }
+
+    @Override
+    public UserReservedRouteDetailOneQuerySubResponse findReservedRouteDetail(Long userId,
+        Long routeId) {
+        return queryFactory.select(
+                Projections.constructor(UserReservedRouteDetailOneQuerySubResponse.class,
+                    festival.id,
+                    festival.title,
+                    seat.no,
+                    route.expectedTime,
+                    route.status,
+                    route.numberOfSeats,
+                    route.numberOfReservationSeats,
+                    route.price,
+                    festival.thumbnailPath,
+                    route.startedAt,
+                    station.name,
+                    station.city.name,
+                    festival.location,
+                    festival.city.name,
+                    driver.id,
+                    driver.name,
+                    driver.company,
+                    driver.phoneNumber,
+                    route.carNumber,
+                    driver.imagePath))
+            .from(route)
+            .join(festival)
+            .on(route.festival.id.eq(festival.id))
+            .join(seat)
+            .on(seat.route.id.eq(route.id))
+            .join(station)
+            .on(route.station.id.eq(station.id))
+            .join(driver)
+            .on(route.driver.id.eq(driver.id))
+            .join(city)
+            .on(festival.city.id.eq(city.id))
+            .join(user)
+            .on(seat.user.id.eq(user.id))
+            .where(user.id.eq(userId).and(route.id.eq(routeId))).fetchOne();
     }
 
     public Optional<PaymentPageResponse> findPaymentInfo(Long userId, Long routeId) {

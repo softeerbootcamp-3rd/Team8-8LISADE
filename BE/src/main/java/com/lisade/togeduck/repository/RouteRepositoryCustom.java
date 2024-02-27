@@ -5,6 +5,7 @@ import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.dto.response.PaymentPageResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailOneQuerySubResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
@@ -40,6 +41,8 @@ public interface RouteRepositoryCustom {
     UserSeatDetailResponse getSeatDetail(Long userId, Long routeId);
 
     CoordinateResponse getCoordinate(Long routeId);
+
+    UserReservedRouteDetailOneQuerySubResponse findReservedRouteDetail(Long userId, Long routeId);
 
     Optional<PaymentPageResponse> findPaymentInfo(Long userId, Long routeId);
 
