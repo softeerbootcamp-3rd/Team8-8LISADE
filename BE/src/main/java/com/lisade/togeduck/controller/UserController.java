@@ -68,7 +68,7 @@ public class UserController {
     public UserReservedRouteDetail getRouteInfo(@Login User user,
         @PathVariable(name = "route_id") Long routeId) {
 
-        return userService.getReservedRouteInfoOneQuery(user.getId(), routeId)
+        return userService.getReservedRouteInfo(user.getId(), routeId)
             .orElseThrow(RuntimeException::new);
     }
 

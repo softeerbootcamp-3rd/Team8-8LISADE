@@ -4,6 +4,8 @@ spring:
     url: jdbc:mysql://${MYSQL_TEST_DATABASE_HOST}:${MYSQL_TEST_DATABASE_PORT}/${MYSQL_TEST_DATABASE_NAME}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${MYSQL_TEST_USERNAME}
     password: ${MYSQL_TEST_PASSWORD}
+    hikari:
+      maximum-pool-size=100
 ---
 spring:
   jpa:
@@ -36,3 +38,9 @@ spring:
 fcm:
   service-account-file: ${FIREBASE_KEY_PATH}
   project-id: ${FIREBASE_PROJECT_ID}
+
+logging:
+  level:
+    com.zaxxer.hikari.HikariConfig: DEBUG
+#    com.zaxxer.hikari: TRACE
+

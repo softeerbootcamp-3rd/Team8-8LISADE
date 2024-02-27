@@ -86,7 +86,7 @@ public class UserService {
                 busInfo, driverInfo, arrivedAt));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<UserReservedRouteDetail> getReservedRouteInfoOneQuery(
         Long userId,
         Long routeId) {
