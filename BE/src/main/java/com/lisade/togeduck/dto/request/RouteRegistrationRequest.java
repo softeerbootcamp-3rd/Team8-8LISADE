@@ -14,5 +14,4 @@ public class RouteRegistrationRequest {
     private Long stationId;
     private Long busId;
     private Integer distance;
-    private Integer expectedTime;
 }
